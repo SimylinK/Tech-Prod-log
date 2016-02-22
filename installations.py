@@ -42,23 +42,23 @@ print(test_install2.nom)
 
 ## Lecture du CSV
 
-def test_lecture_CSV () : 
+def CSV_read_test () : 
     # on récupère le fichier CSV
     fname =  os.path.dirname(os.path.abspath(__file__))+"/data/installations.csv"
     file = open(fname, "r") #"r" pour "read" => indique ce qu'on fait avec le fichier
 
-    liste = []
+    list = []
 
     try :
         reader = csv.reader(file) 
         # pour chaque ligne, on récupère les colonnes qui nous intéressent pour créer des Installation
         for row in reader :
-            liste.append(Installation(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+            list.append(Installation(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
     finally :
         file.close() # on ferme le fichier
 
-    for row in liste : 
+    for row in list : 
         print (row.nom)
 
 
-#test_lecture_CSV()
+#CSV_read_test()

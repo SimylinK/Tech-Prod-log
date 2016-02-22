@@ -29,23 +29,23 @@ class Activite: # Définition de la classe Activite
 
 ## Lecture du CSV
 
-def test_lecture_CSV () : 
+def CSV_read_test () : 
     # on récupère le fichier CSV
     fname =  os.path.dirname(os.path.abspath(__file__))+"/data/activites.csv"
     file = open(fname, "r") #"r" pour "read" => indique ce qu'on fait avec le fichier
 
-    liste = []
+    list = []
 
     try :
         reader = csv.reader(file) 
         # pour chaque ligne, on récupère les colonnes qui nous intéressent pour créer des Activite
         for row in reader :
-            liste.append(Activite(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+            list.append(Activite(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
     finally :
         file.close() # on ferme le fichier
 
-    for row in liste : 
+    for row in list : 
         print (row.activite_libelle)
 
 
-#test_lecture_CSV()
+#CSV_read_test()
