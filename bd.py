@@ -35,7 +35,30 @@ class BD:
             BD.cursor.execute(request)
         except ValueError :
             print("Execute error")
-    
+        
+        list_keys = []
+        for key in list_attribute.keys() :
+            list_keys.append()
+        
+        
+        pre_request  = "INSERT INTO " +  BD.remove_dot_CSV(CSV_file) + " ("
+            
+        for key in list_keys :
+            pre_request = pre_request + key + ","
+        pre_request = pre_request[:-1] + ") VALUES ("
+        
+        
+        for object in list :
+            request = pre_request
+            for key in list_keys :
+                request = request + object.key + ","
+            request = request[:-1] + ");"   
+            
+            try :
+                BD.cursor.execute(request)
+            except ValueError :
+                print("Execute error")
+
     def define_PK (table_name, constraint_name, PK) :
         BD.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
         
