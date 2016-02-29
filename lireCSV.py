@@ -36,6 +36,13 @@ def CSV_read (file_name) :
     
     return list
 
+
+def get_list_attribute (file_name) :
+    return type_object[file_name].list_attribute
+    
+    
+    
+    
 ## Tests
 CSV_read("installations.csv")
 #CSV_read("equipements.csv")

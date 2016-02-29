@@ -8,7 +8,14 @@ def connect () :
 
 def create_table (CSV_file) :
     list = CSV_read(CSV_file)
+    list_attribute = get_list_attribute(CSV_file)
     
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS"""+remove_dot_CSV(CSV_file)+""" ( """ + 
+        for key, value in list_attribute :
+            key + " " +  python_type_to_SQL(value)
+        + """ ,); """)
+
 
     #print (list)
 
@@ -16,7 +23,7 @@ def create_table (CSV_file) :
 def define_PK (table_name, constraint_name, PK) :
     cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
     
-def create_field(type) :
+def python_type_to_SQL(type) :
     if type is "int" :
         return "INTEGER DEFAULT NULL"
     elif type is "str" :
