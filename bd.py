@@ -76,7 +76,7 @@ class BD:
         return CSV_file_name[:-4]
         
 
-## main
+## Tests
 
 BD.connect()
 BD.create_table("installations.csv")
