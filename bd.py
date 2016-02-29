@@ -10,6 +10,7 @@ def create_table (CSV_file) :
     list = CSV_read(CSV_file)
     list_attribute = get_list_attribute(CSV_file)
     
+
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS"""+remove_dot_CSV(CSV_file)+""" ( """ + 
         for key, value in list_attribute :
@@ -18,6 +19,7 @@ def create_table (CSV_file) :
 
 
     #print (list)
+
 
 
 def define_PK (table_name, constraint_name, PK) :
@@ -36,3 +38,6 @@ def python_type_to_SQL(type) :
 def remove_dot_CSV (CSV_file_name) :
     return CSV_file_name[:-4]
 
+
+
+print (create_table("installations.csv"))

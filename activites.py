@@ -13,9 +13,7 @@ class Activite: # Définition de la classe Activite
     - activite_praticable
     - activite_pratiquee
     - dans_salle_spe"""
-    self.list_attribute{'code_INSEE' : 'int', 'nom_commune' : 'str', 'num_fiche_equipement' : 'int', 
-        'nb_equipements_identiques' : 'int', 'activite_code' : 'int', 'activite_libelle' : 'str', 
-        'activite_praticable' : 'bool', 'activite_pratiquee' : 'bool', 'dans_salle_spe' : 'bool'}
+    list_attribute = {'code_INSEE' : 'int', 'nom_commune' : 'str', 'num_fiche_equipement' : 'int',     'nb_equipements_identiques' : 'int', 'activite_code' : 'int', 'activite_libelle' : 'str', 'activite_praticable' : 'bool', 'activite_pratiquee' : 'bool', 'dans_salle_spe' : 'bool'}
 
     # constructeur
     def __init__(self, code_INSEE = -1, nom_commune = "default", num_fiche_equipement = -1, nb_equipements_identiques = -1, activite_code = -1, activite_libelle = "default", activite_praticable = False, activite_pratiquee = False, dans_salle_spe = False) :

@@ -13,9 +13,7 @@ class Equipement: # Définition de la classe Equipement
     - eq_nom_batiment
     - equipement_type_lib
     - equipement_fiche"""
-    self.list_attribute = {'com_insee' : 'int', 'com_lib' : 'str', 'ins_numero_install' : 'int', 
-        'ins_nom' : 'str', 'equipement_id' : 'int', 'eq_nom' : 'str', 'eq_nom_batiment' : 'str', 
-        'equipement_type_lib' : 'str', 'equipement_fiche' : 'str'}
+    list_attribute = {'com_insee' : 'int', 'com_lib' : 'str', 'ins_numero_install' : 'int', 'ins_nom' : 'str', 'equipement_id' : 'int', 'eq_nom' : 'str', 'eq_nom_batiment' : 'str', 'equipement_type_lib' : 'str', 'equipement_fiche' : 'str'}
     
 
     # constructeur

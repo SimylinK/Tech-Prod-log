@@ -13,9 +13,7 @@ class Installation: # Définition de la classe Installation
     - numero_voie
     - nom_voie
     - location"""
-    self.list_attribute{'nom' : 'str', 'numero' : 'int', 'nom_commune' : 'str', 'code_INSEE' : 'int', 
-        'code_postal' : 'int', 'nom_lieu_dit' : 'str', 'numero_voie' : 'int', 'nom_voie' : 'str', 
-        'longitude' : 'int', 'latitude' : 'int'}
+    list_attribute = {'nom' : 'str', 'numero' : 'int', 'nom_commune' : 'str', 'code_INSEE' : 'int', 'code_postal' : 'int', 'nom_lieu_dit' : 'str', 'numero_voie' : 'int', 'nom_voie' : 'str', 'longitude' : 'int', 'latitude' : 'int'}
 
     # constructeur
     def __init__(self, nom = "default", numero = -1, nom_commune = "default", code_INSEE = -1, code_postal = -1, nom_lieu_dit = "default", numero_voie = -1, nom_voie = "default", longitude = -1, latitude = -1) :
