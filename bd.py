@@ -9,6 +9,7 @@ def connect () :
 def create_table (CSV_file) :
     list = CSV_read(CSV_file)
     
+
     #print (list)
 
 
