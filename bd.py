@@ -1,9 +1,5 @@
 import mysql.connector as sql #mysql.connector 1.1.6
-from lireCSV import lecture_CSV
-
-# se connecter à la base sur phpMyAdmin puis faire des create table à l'aide des données récup dans les CSV (utilisation de lireCSV.py)
-
-
+from lireCSV import CSV_read
 
 def connect () :
     conn = sql.connect(host="infoweb",user="E145910Y",password="E145910Y", database="E145910Y", port=3306)
@@ -11,33 +7,24 @@ def connect () :
     conn.close()
 
 def create_table (CSV_file) :
-    list = lecture_CSV(CSV_file)
+    list = CSV_read(CSV_file)
     
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS"""+""" CSV_file (
-        """+create_field(row[0])+""",
-        """+create_field(row[1])+""",
-        """+create_field(row[2])+""",
-        """+create_field(row[3])+""",
-        """+create_field(row[4])+""",
-        """+create_field(row[5])+""",
-        """+create_field(row[6])+""",
-        """+create_field(row[7])+""",
-        """+create_field(row[8])+"""
-    );
-    """)
+    #print (list)
+
 
 def define_PK (table_name, constraint_name, PK) :
-    cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+contraint_name+" PRIMARY KEY("+PK+");")
+    cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
     
-def create_field(row) :
-    
+def create_field(type) :
+    if type is "int" :
+        return "INTEGER DEFAULT NULL"
+    elif type is "str" :
+        return "VARCHAR(50) DEFAULT NULL"
+    elif type is "bool" :
+        return "BOOLEAN DEFAULT NULL"
+    else :
+        print ("Problème de type")
 
-
-        id int(5) NOT NULL AUTO_INCREMENT,
-        name varchar(50) DEFAULT NULL,
-        age INTEGER DEFAULT NULL,
-
-def remove_CSV_extension(string) :
-    return string[:-4]
+def remove_dot_CSV (CSV_file_name) :
+    return CSV_file_name[:-4]
 

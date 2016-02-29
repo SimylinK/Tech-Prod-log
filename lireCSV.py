@@ -26,12 +26,17 @@ def CSV_read (file_name) :
     finally :
         file.close() # on ferme le fichier
 
-    for row in list : 
-        print (row)
+    # afficher le type de row :
+    #print(type(row))
     
-    #return list
+    """
+    for row in list : 
+        print (row.nom)
+    """
+    
+    return list
 
 ## Tests
-#CSV_read("installations.csv")
+CSV_read("installations.csv")
 #CSV_read("equipements.csv")
 #CSV_read("activite.csv")
