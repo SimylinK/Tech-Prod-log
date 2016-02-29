@@ -9,14 +9,14 @@ def connect () :
 def create_table (CSV_file) :
     list = CSV_read(CSV_file)
     
-
-    #print (list)
+    for row in list : 
+        print (row.nom)
 
 
 def define_PK (table_name, constraint_name, PK) :
     cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
     
-def create_field(type) :
+def python_type_to_SQL(type) :
     if type is "int" :
         return "INTEGER DEFAULT NULL"
     elif type is "str" :
@@ -29,3 +29,6 @@ def create_field(type) :
 def remove_dot_CSV (CSV_file_name) :
     return CSV_file_name[:-4]
 
+
+
+print (create_table("installations.csv"))
