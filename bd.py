@@ -13,19 +13,20 @@ def connect () :
 def create_table (CSV_file) :
     list = lecture_CSV(CSV_file)
     
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS"""+""" CSV_file (
-        """+create_field(row[0])+""",
-        """+create_field(row[1])+""",
-        """+create_field(row[2])+""",
-        """+create_field(row[3])+""",
-        """+create_field(row[4])+""",
-        """+create_field(row[5])+""",
-        """+create_field(row[6])+""",
-        """+create_field(row[7])+""",
-        """+create_field(row[8])+"""
-    );
-    """)
+    for row in list :
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS"""+""" CSV_file (
+            """+create_field(row[0])+""",
+            """+create_field(row[1])+""",
+            """+create_field(row[2])+""",
+            """+create_field(row[3])+""",
+            """+create_field(row[4])+""",
+            """+create_field(row[5])+""",
+            """+create_field(row[6])+""",
+            """+create_field(row[7])+""",
+            """+create_field(row[8])+"""
+        );
+        """)
 
 def define_PK (table_name, constraint_name, PK) :
     cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+contraint_name+" PRIMARY KEY("+PK+");")

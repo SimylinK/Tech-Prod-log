@@ -13,6 +13,10 @@ class Equipement: # Définition de la classe Equipement
     - eq_nom_batiment
     - equipement_type_lib
     - equipement_fiche"""
+    self.list_attribute = {'com_insee' : 'int', 'com_lib' : 'str', 'ins_numero_install' : 'int', 
+        'ins_nom' : 'str', 'equipement_id' : 'int', 'eq_nom' : 'str', 'eq_nom_batiment' : 'str', 
+        'equipement_type_lib' : 'str', 'equipement_fiche' : 'str'}
+    
 
     # constructeur
     def __init__(self, com_insee = -1, com_lib = "default", ins_numero_install = -1, ins_nom = "default", equipement_id = -1, eq_nom = "default", eq_nom_batiment = "default", equipement_type_lib = "default", equipement_fiche = "default") :
