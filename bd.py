@@ -38,7 +38,7 @@ class BD:
         
         list_keys = []
         for key in list_attribute.keys() :
-            list_keys.append()
+            list_keys.append(key)
         
         
         pre_request  = "INSERT INTO " +  BD.remove_dot_CSV(CSV_file) + " ("
@@ -51,13 +51,19 @@ class BD:
         for object in list :
             request = pre_request
             for key in list_keys :
-                request = request + object.key + ","
+                if isinstance(getattr(object, key), str):
+                    tmp_string = str(getattr(object, key))
+                    tmp_string = tmp_string.replace('"', '""')
+                    request = request + "\"" + tmp_string + "\"" + ","
+                else :
+                    request = request + str(getattr(object, key)) + ","
             request = request[:-1] + ");"   
             
             try :
                 BD.cursor.execute(request)
             except ValueError :
                 print("Execute error")
+            print(request)
 
     def define_PK (table_name, constraint_name, PK) :
         BD.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
