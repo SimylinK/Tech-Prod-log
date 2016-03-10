@@ -22,8 +22,16 @@ class BD:
     def create_table (CSV_file) :
         list = CSV_read(CSV_file)
         list_attribute = get_list_attribute(CSV_file)
+        
+        #On réinitialise la base de donnée
+        request = "DROP TABLE "+BD.remove_dot_CSV(CSV_file)+";"
+        try :
+            BD.cursor.execute(request)
+        except ValueError :
+            print("Execute error")
     
-        request = "CREATE TABLE IF NOT EXISTS "+BD.remove_dot_CSV(CSV_file)+" ("
+        #On créé la table
+        request = "CREATE TABLE "+BD.remove_dot_CSV(CSV_file)+" ("
         
         for key, value in list_attribute.items() :
             request = request + (key + " " +  BD.python_type_to_SQL(value) + ",")
@@ -40,7 +48,7 @@ class BD:
         for key in list_attribute.keys() :
             list_keys.append(key)
         
-        
+        #On remplit la table à partir du fichier csv
         pre_request  = "INSERT INTO " +  BD.remove_dot_CSV(CSV_file) + " ("
             
         for key in list_keys :
@@ -56,6 +64,7 @@ class BD:
                     tmp_string = tmp_string.replace('"', '""')
                     request = request + "\"" + tmp_string + "\"" + ","
                 else :
+                    #Je crois qu'on ne rentre pas ici mais c'est pas grave
                     request = request + str(getattr(object, key)) + ","
             request = request[:-1] + ");"   
             
@@ -64,9 +73,10 @@ class BD:
             except ValueError :
                 print("Execute error")
             print(request)
+            
 
-    def define_PK (table_name, constraint_name, PK) :
-        BD.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
+    def define_PK (table_name, constraint_name, PK)         BD.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
+:
         
     def python_type_to_SQL(type) :
         if type is "int" :
@@ -75,6 +85,8 @@ class BD:
             return "VARCHAR(50) DEFAULT NULL"
         elif type is "bool" :
             return "BOOLEAN DEFAULT NULL"
+        elif type is "float" :
+            return "FLOAT DEFAULT NULL"
         else :
             print ("Problème de type")
     
