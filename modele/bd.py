@@ -23,6 +23,13 @@ class BD:
             name = BD.remove_dot_CSV(table)
             DAO.create_table(name, list, list_attribute)
 
+    def create_table (table) :
+        
+        list = CSV_read(table)
+        list_attribute = BD.get_list_attribute(table)
+        name = BD.remove_dot_CSV(table)
+        DAO.create_table(name, list, list_attribute)
+
     
     def remove_dot_CSV (CSV_file_name) :
         return CSV_file_name[:-4]
