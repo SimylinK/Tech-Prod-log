@@ -44,8 +44,6 @@ class Installation: # Définition de la classe Installation
         self.nom_voie = row[7]
         self.longitude = row[9]
         self.latitude = row[10]
-        
-        print(self.longitude)
 
 """
 
