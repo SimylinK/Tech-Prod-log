@@ -34,4 +34,4 @@ class BD:
 ## Tests
 
 
-BD.create_tables()
+#BD.create_tables()
