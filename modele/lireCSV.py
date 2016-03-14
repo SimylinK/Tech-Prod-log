@@ -1,8 +1,8 @@
 import csv
 import os
-from installations import Installation
-from equipements import Equipement
-from activites import Activite
+from bean.installations import Installation
+from bean.equipements import Equipement
+from bean.activites import Activite
 
 # On associe les classes aux bons fichiers CSV
 type_object = {
