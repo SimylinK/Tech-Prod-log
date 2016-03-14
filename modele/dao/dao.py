@@ -68,7 +68,8 @@ class DAO:
                 else :
                     #Je crois qu'on ne rentre pas ici mais c'est pas grave
                     request = request + str(getattr(object, key)) + ","
-            request = request[:-1] + ");"   
+            request = request[:-1] + ");"
+            
             
             try :
                 DAO.cursor.execute(request)
@@ -76,6 +77,8 @@ class DAO:
                 print("Execute error")
                 return
             print(request)
+ 
+        DAO.conn.commit()
         DAO.close()    
 
     def define_PK (table_name, constraint_name, PK) :
