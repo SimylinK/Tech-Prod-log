@@ -31,10 +31,10 @@ class BD:
         DAO.create_table(name, list, list_attribute)
            
     def get_json_from_db(db_table):
-        tname = type_objet[db_table];
+        #tname = type_objet[db_table];
     
         # select sur la base de données
-        result = db_select(tname)
+        result = db_select(dt_table)
         # nom des colonnes de la tables
         res = {}
     
