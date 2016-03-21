@@ -38,11 +38,7 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
-        alert("success");
         var target= $("#"+fichier);
-        $('html, body').animate({
-          scrollTop: target.offset().top
-        }, 1);
 
         var result = [];
         var table = [];
@@ -59,13 +55,13 @@ $(function(){
           result = [];
         }
 
-        html+= "<thead><tr>";
+        html+= "<thead><tr>"
         html += "<th>indice</th>";
         $.each(entete, function(i) {
           html += "<th>"+entete[i]+"</th>";
         });
 
-        html+= "</tr></thead>";
+        html+= "</tr></thead>"
 
         $.each(table, function(i) {
           if(i < max && i >= min){
