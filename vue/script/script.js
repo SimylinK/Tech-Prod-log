@@ -33,11 +33,12 @@ $(function(){
       url      : "http://localhost:8080/display/"+fichier,
       // Passage des données au fichier externe
       cache    : false,
-      dataType : "json",
+      dataType : "jsonp",
       error    : function(request, error) { // Info Debuggage si erreur
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
+        alert("success");
         var target= $("#"+fichier);
         $('html, body').animate({
           scrollTop: target.offset().top
@@ -58,13 +59,13 @@ $(function(){
           result = [];
         }
 
-        html+= "<thead><tr>"
+        html+= "<thead><tr>";
         html += "<th>indice</th>";
         $.each(entete, function(i) {
           html += "<th>"+entete[i]+"</th>";
         });
 
-        html+= "</tr></thead>"
+        html+= "</tr></thead>";
 
         $.each(table, function(i) {
           if(i < max && i >= min){
@@ -83,9 +84,8 @@ $(function(){
   }
 
   $("#button_display_installation").on("click", function() {
-    alert("Test1");
+    alert("test");
     display_table("installations");
-    alert("Test2");
   });
   $("#button_display_activitie").on("click", function() {
     display_table("activites");
