@@ -30,12 +30,16 @@ class BD:
         name = BD.remove_dot_CSV(table)
         DAO.create_table(name, list, list_attribute)
 
-    def get_json_from_db(db_table):
+    def select_all_table(db_table):
         #tname = type_objet[db_table];
 
         # select sur la base de données
-        result = DAO.db_select(db_table)
+        result = DAO.select_all(db_table)
         # nom des colonnes de la tables
+
+        return BD.get_JSON(result)
+    
+    def get_JSON(result) :
         res = {}
 
         id1 = str(result[0][0]).replace("_", " ")
@@ -54,7 +58,7 @@ class BD:
                     id5:row[4],
                     id6:row[5]}
             res[len(res)] = dict
-
+            
         return res
 
     def remove_dot_CSV (CSV_file_name) :

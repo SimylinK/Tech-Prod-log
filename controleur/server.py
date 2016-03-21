@@ -47,8 +47,25 @@ def import_table(table_name) :
 @enable_cors
 def view_table(table_name):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.get_json_from_db(table_name))
+    res = json.dumps(BD.select_all_table(table_name))
     return res
+
+'''
+##Requêtes sur les tables
+
+#Table activites
+@app.route('/request/activites/<nom>,....', method=['OPTIONS', 'GET'])
+@enable_cors
+def request_table(nom, ....):
+    response.headers['Content-type'] = 'application/json'
+    res = json.dumps(BD.select_from_activites(nom,....))
+    return res
+
+#Table Equipement
+#TODO
+#Table Installation
+#TODO
+'''
 
 
 '''

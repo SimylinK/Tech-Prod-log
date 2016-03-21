@@ -86,7 +86,7 @@ class DAO:
         DAO.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
         DAO.close()
 
-    def db_select(table_name) :
+    def select_all(table_name) :
         DAO.connect()
 
         request = "SELECT * FROM "+table_name+";"
