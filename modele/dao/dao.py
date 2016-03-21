@@ -11,18 +11,18 @@ class DAO:
             DAO.cursor = DAO.conn.cursor()
         except ValueError :
             print("Connect error")
-    
+
     #Fermr la connexion
     def close () :
         try :
             DAO.cursor.close();
         except ValueError:
             print("Close error")
-    
+
     #Permet de créer une table et de la remplir de données à partir d'un CSV
     def create_table (table_name, list, list_attribute) :
         DAO.connect()
-        
+
         #On réinitialise la base de donnée
         request = "DROP TABLE IF EXISTS "+table_name+";"
         try :
@@ -30,34 +30,34 @@ class DAO:
         except Error :
             print("Execute error")
             return
-    
+
         #On créé la table
         request = "CREATE TABLE "+table_name+" ("
-        
+
         for key, value in list_attribute.items() :
             request = request + (key + " " +  DAO.python_type_to_SQL(value) + ",")
-        
+
         request = request[:-1]
         request = request + ");"
-            
+
         try :
             DAO.cursor.execute(request)
         except Error :
             print("Execute error")
             return
-        
+
         list_keys = []
         for key in list_attribute.keys() :
             list_keys.append(key)
-        
+
         #On remplit la table à partir du fichier csv
         pre_request  = "INSERT INTO " +  table_name + " ("
-            
+
         for key in list_keys :
             pre_request = pre_request + key + ","
         pre_request = pre_request[:-1] + ") VALUES ("
-        
-        
+
+
         for object in list :
             request = pre_request
             for key in list_keys :
@@ -69,20 +69,22 @@ class DAO:
                     #Je crois qu'on ne rentre pas ici mais c'est pas grave
                     request = request + str(getattr(object, key)) + ","
             request = request[:-1] + ");"
-            
-            
+
+
             try :
                 DAO.cursor.execute(request)
             except Error :
                 print("Execute error")
                 return
             print(request)
- 
+
         DAO.conn.commit()
-        DAO.close()    
+        DAO.close()
 
     def define_PK (table_name, constraint_name, PK) :
+        DAO.connect()
         DAO.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
+        DAO.close()
 
     def db_select(table) :
         DAO.connect()
@@ -118,10 +120,9 @@ class DAO:
             return "FLOAT DEFAULT NULL"
         else :
             print ("Problème de type")
-    
+
     def remove_dot_CSV (CSV_file_name) :
         return CSV_file_name[:-4]
-        
+
 
 ## Tests
-
