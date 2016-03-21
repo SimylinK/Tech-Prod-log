@@ -84,6 +84,28 @@ class DAO:
     def define_PK (table_name, constraint_name, PK) :
         DAO.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
 
+    def db_select(table) :
+        DAO.connect()
+        
+        request = "SELECT * FROM "+table_name+";"
+        try :
+            DAO.cursor.execute(request)
+        except Error :
+            print("Execute error")
+            return
+
+        #num_fields = len(cursor.description)
+        field_names = [i[0] for i in DAO.cursor.description]
+    
+        #print(field_names)
+    
+        rows = DAO.cursor.fetchall()
+    
+        result = [field_names]
+        result.append(rows)
+        
+        DAO.close()
+        return result
         
     def python_type_to_SQL(type) :
         if type is "int" :
