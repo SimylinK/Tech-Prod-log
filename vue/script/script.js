@@ -26,6 +26,9 @@ $(function(){
     create_table("equipements");
   });*/
 
+  min =0; 
+  max = 10;
+
   //Affichage sur les tables
   function display_table(fichier) {
     $.ajax({
@@ -38,7 +41,6 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
-        var target= $("#"+fichier);
 
         var result = [];
         var table = [];
@@ -81,7 +83,6 @@ $(function(){
 
   $("#button_display_installation").on("click", function() {
     display_table("installations");
-    alert("test");
   });
   $("#button_display_activitie").on("click", function() {
     display_table("activites");
