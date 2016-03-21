@@ -1,8 +1,5 @@
 $(function(){
 
-
-
-
   // Création de la base de donnée
   /*function create_table(fichier) {
     $.ajax({
@@ -86,7 +83,9 @@ $(function(){
   }
 
   $("#button_display_installation").on("click", function() {
+    alert("Test1");
     display_table("installations");
+    alert("Test2");
   });
   $("#button_display_activitie").on("click", function() {
     display_table("activites");
