@@ -20,9 +20,16 @@ def index(filepath):
   
 ##Import des tables 
 
+'''
 @route('/create/<table_name>')
 def import_table(table_name) :
-    BD.create_table(table_name)
+    BD.create_table(table_name+".csv")
+'''  
+    
+@route('/create/installations')
+def import_table() :
+    #BD.create_table("installations.csv")
+    return template('<b>Hello</b>!')
     
     
 @route('/display/<table_name>')
