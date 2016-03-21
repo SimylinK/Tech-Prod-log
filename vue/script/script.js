@@ -4,15 +4,14 @@ $(function(){
 
 
   // Création de la base de donnée
-  function create_table(fichier) {
+  /*function create_table(fichier) {
     $.ajax({
       // chargement du fichier externe
       url      : "http://localhost:8080/create/"+fichier,
       // Passage des données au fichier externe
-      cache    : false,
-      dataType : "json",
+      type : 'GET',
       error    : function(request, error) { // Info Debuggage si erreur
-        alert("Erreur : responseText: "+request.responseText);
+        alert("Erreur " + fichier + ": responseText: "+request.responseText);
       },
       success  : function(data) {
         alert("La base de donnée de " + fichier + " est à jour");
@@ -28,7 +27,7 @@ $(function(){
   });
   $("#create_equipment").on("click", function() {
     create_table("equipements");
-  });
+  });*/
 
   //Affichage sur les tables
   function display_table(fichier) {
@@ -86,13 +85,13 @@ $(function(){
     });
   }
 
-  $("#display_installation").on("click", function() {
+  $("#button_display_installation").on("click", function() {
     display_table("installations");
   });
-  $("#display_activitie").on("click", function() {
+  $("#button_display_activitie").on("click", function() {
     display_table("activites");
   });
-  $("#display_equipment").on("click", function() {
+  $("#button_display_equipment").on("click", function() {
     display_table("equipements");
   });
 

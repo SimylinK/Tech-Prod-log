@@ -1,7 +1,7 @@
 import os.path
 import sys
 #pour revenir à un niveau au-dessus dans le path (on fait un chemin absolu de celui où on est et on revient en plus un cran en arrière puis dans modele avec ../modele)
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../modele"))) 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../modele")))
 from bottle import route, run, template, static_file, post, get, response
 import json
 from bd import BD
@@ -17,8 +17,8 @@ def index(name):
 @route('/<filepath:path>')
 def index(filepath):
     return static_file(filepath,root="../vue")
-  
-##Import des tables 
+
+##Import des tables
 
 '''
 @route('/create/<table_name>')
@@ -31,7 +31,8 @@ def import_table() :
     #BD.create_table("installations.csv")
     return template('<b>Hello</b>!')
     
-    
+
+
 @route('/display/<table_name>')
 def view_table(table_name):
     #response.headers['Content-type'] = 'application/json'
@@ -40,5 +41,3 @@ def view_table(table_name):
 
 
 run(host='localhost', port=8080) # après avoir lancé le script, aller à l'adresse http://localhost:8080/index.html
-
-
