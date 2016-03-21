@@ -33,7 +33,7 @@ $(function(){
       url      : "http://localhost:8080/display/"+fichier,
       // Passage des données au fichier externe
       cache    : false,
-      dataType : "jsonp",
+      dataType : "json",
       error    : function(request, error) { // Info Debuggage si erreur
         alert("Erreur : responseText: "+request.responseText);
       },
@@ -84,8 +84,8 @@ $(function(){
   }
 
   $("#button_display_installation").on("click", function() {
-    alert("test");
     display_table("installations");
+    alert("test");
   });
   $("#button_display_activitie").on("click", function() {
     display_table("activites");
