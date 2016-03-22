@@ -38,8 +38,7 @@ app = bottle.app()
 @app.route('/create/<table_name>')
 def import_table(table_name) :
     BD.create_table(table_name+".csv")
-    #il faudra essayer de récup url de la page précédente pour pouvoir rediriger dessus
-    #redirect("http://localhost:8080/index.html")
+    return "<script>alert('Import terminé !'); history.go(-1);</script>" #on affiche un message de succès puis on retourne à la page d'accueil
 
 
 ##Affichage des tables

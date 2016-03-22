@@ -10,9 +10,18 @@
         <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
 
         <script src="script/script.js"></script>
+
+        <script language=javascript>
+            //on récupère ici dans une variable l'url courante pour 
+            //pouvoir revenir en arrière lors des imports de tables
+            var url= document.URL; 
+        </script>
     </head>
 
+
+
 <body>
+
     <h1> Mise à jour de la base de donnée </h1>
     <a href="http://localhost:8080/create/installations" id="create_installation">Créer la table Installation</a>
     <a href="http://localhost:8080/create/activites" id="create_activitie">Créer la table Activité</a>
