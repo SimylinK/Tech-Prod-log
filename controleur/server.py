@@ -34,6 +34,13 @@ def enable_cors(fn):
 app = bottle.app()
 
 
+###Remplir les champs du formulaire
+@app.route('/fill_form')
+def fill() :
+    
+
+
+
 ##Importation des tables
 @app.route('/create/<table_name>')
 def import_table(table_name) :

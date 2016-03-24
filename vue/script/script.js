@@ -29,6 +29,22 @@ $(function(){
   min =0;
   max = 10;
 
+
+  //Remplir les champs du formulaire au lancement de la page
+  $.ajax({
+      // chargement du fichier externe
+      url      : "http://localhost:8080/fill_form",
+      // Passage des données au fichier externe
+      cache    : false,
+      dataType : "json",
+      error    : function(request, error) { // Info Debuggage si erreur
+        alert("Erreur : responseText: "+request.responseText);
+      },
+      success  : function(data) {
+        alert("success");
+      }
+  })
+
   //Affichage sur les tables
   function display_table(fichier) {
     $.ajax({
