@@ -59,8 +59,9 @@ def CSV_read_test () :
     finally :
         file.close() # on ferme le fichier
 
+    '''
     for row in list : 
         print (row.activite_libelle)
-
+    '''
 
 #CSV_read_test()

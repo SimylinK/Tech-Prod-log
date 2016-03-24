@@ -76,7 +76,7 @@ class DAO:
             except Error :
                 print("Execute error")
                 return
-            print(request)
+            #print(request)
 
         DAO.conn.commit()
         DAO.close()

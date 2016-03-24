@@ -45,6 +45,6 @@ def get_list_attribute (file_name) :
     
     
 ## Tests
-CSV_read("installations.csv")
+#CSV_read("installations.csv")
 #CSV_read("equipements.csv")
 #CSV_read("activite.csv")
