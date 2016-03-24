@@ -62,8 +62,9 @@ def CSV_read_test () :
     finally :
         file.close() # on ferme le fichier
 
+    '''
     for row in list : 
         print (row.eq_nom)
-
+    '''
 
 #CSV_read_test()
