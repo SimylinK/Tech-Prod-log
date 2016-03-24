@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sport / Ville - Pays de la Loire</title>
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <!-- Bootstrap -->
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css">
+        <script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+        <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+
+        <script src="script/script.js"></script>
+
+        <script language=javascript>
+            //on récupère ici dans une variable l'url courante pour 
+            //pouvoir revenir en arrière lors des imports de tables
+            var url= document.URL; 
+        </script>
+    </head>
+
+
+
+<body>
+
+    <h1> Mise à jour de la base de donnée </h1>
+    <a href="http://localhost:8080/create/installations" id="create_installation">Créer la table Installation</a>
+    <a href="http://localhost:8080/create/activites" id="create_activitie">Créer la table Activité</a>
+    <a href="http://localhost:8080/create/equipements" id="create_equipment">Créer la table Equipement</a>
+
+
+    <h1> Installation </h1>
+
+    <input id="button_display_installation" type="button" value="envoyer"/>
+
+    <table style="min-height:500px" id="display_installations">
+
+    </table>
+
+    <h1> Activité </h1>
+
+    <input id="button_display_activitie" type="button" value="envoyer"/>
+
+    <table style="min-height:500px" id="display_activites">
+
+    </table>
+
+    <h1> Equipement </h1>
+
+    <input id="button_display_equipment" type="button" value="envoyer"/>
+
+    <table style="min-height:500px" id="display_equipements">
+
+    </table>
+</body>
+</html>
