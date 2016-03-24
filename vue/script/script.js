@@ -26,7 +26,7 @@ $(function(){
     create_table("equipements");
   });*/
 
-  min =0; 
+  min =0;
   max = 10;
 
   //Affichage sur les tables
@@ -81,11 +81,89 @@ $(function(){
     });
   }
 
+
+  //affichage activités
+  $("#button_display_activitie").on("click", function() {
+    select_table("activites");
+  });
+
+  function select_table(fichier) {
+
+    name_commune = $("#commune").val();
+    number_equipment = $("#nb_equipements").val();
+    activitie = $("#activite").val();
+
+    alert($('input[name=spe2]:checked').val());
+
+    special = "_";
+    if($('input[name=spe2]:checked').val() == "on") {
+      special = "Oui";
+    } else if ($('input[name=spe3]:checked').val() == "on") {
+      special = "Non";
+    }
+
+    practice = "_";
+    if($('input[name=prat2]:checked').val() == "on") {
+      practice = "Oui";
+    } else if ($('input[name=prat3]:checked').val() == "on") {
+      practice = "Non";
+    }
+    alert("practice : " +  practice);
+    alert("special : "  + special);
+
+    $.ajax({
+      // chargement du fichier externe
+      url      : "http://localhost:8080/request/activites/"+name_commune+"/"+number_equipment+"/"+activitie+"/"+practice+"/"+special,
+      // Passage des données au fichier externe
+      cache    : false,
+      dataType : "json",
+      error    : function(request, error) { // Info Debuggage si erreur
+        alert("Erreur : responseText: "+request.responseText);
+      },
+      success  : function(data) {
+
+        alert(data);
+
+        var result = [];
+        var table = [];
+        var html = "";
+        var entete = [];
+        for (var i in data[0])
+        entete.push(i);
+
+        for(var i in data){
+          for(var j in data[i]){
+            result.push([data[i][j]]);
+          }
+          table.push(result);
+          result = [];
+        }
+
+        html+= "<thead><tr>"
+        $.each(entete, function(i) {
+          html += "<th>"+entete[i]+"</th>";
+        });
+
+        html+= "</tr></thead>"
+
+        $.each(table, function(i) {
+          if(i < max && i >= min){
+            html += "<tr>";
+            $.each(table[i], function(j) {
+              html += "<td>"+table[i][j]+"</td>";
+            });
+            html += "</tr>";
+          }
+        });
+
+        $("#display_"+fichier).html(html);
+      }
+    });
+  }
+
+
   $("#button_display_installation").on("click", function() {
     display_table("installations");
-  });
-  $("#button_display_activitie").on("click", function() {
-    display_table("activites");
   });
   $("#button_display_equipment").on("click", function() {
     display_table("equipements");

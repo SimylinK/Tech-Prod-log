@@ -40,6 +40,8 @@ class DAO:
         request = request[:-1]
         request = request + ");"
 
+        print(request)
+
         try :
             DAO.cursor.execute(request)
         except Error :
@@ -113,20 +115,27 @@ class DAO:
     def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
         DAO.connect()
 
+        print(type(number_equipment))
+
+        tmp = int(number_equipment)
+
+
         request = "SELECT * FROM activites where "
 
-        if name_commune != "" :
-            request += "nom_commune = '" + name_commune + "' AND "
-        if number_equipment != -1 :
-            request += "nb_equipements_identiques = " + str(number_equipment) + " AND "
-        if activitie != "" :
-            request += "activite_libelle = '" + activitie + "' AND "
-        if practice != -1 :
-            request += "activite_pratiquee = " +  str(practice) +" AND "
-        if special != -1 :
-            request += "dans_salle_spe = " + str(special) + " AND "
+        if name_commune is not "_" :
+            request += "nom_commune = '" + name_commune + "' AND  "
+        if tmp != -1 :
+            request += "nb_equipements_identiques = " + number_equipment + " AND  "
+        if activitie is not "_" :
+            request += "activite_libelle = '" + activitie + "' AND  "
+        if practice is not "_" :
+            request += "activite_pratiquee = '" +  practice +"' AND  "
+        if special is not "_" :
+            request += "dans_salle_spe = '" + special + "' AND  "
 
-        request = request[:-4] +";"
+        request = request[:-6] +";"
+
+        print("\n\n" + request + "\n\n")
 
         try :
             DAO.cursor.execute(request)

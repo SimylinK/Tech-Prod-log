@@ -15,9 +15,9 @@
         <script src="script/script.js"></script>
 
         <script language=javascript>
-            //on récupère ici dans une variable l'url courante pour 
+            //on récupère ici dans une variable l'url courante pour
             //pouvoir revenir en arrière lors des imports de tables
-            var url= document.URL; 
+            var url= document.URL;
         </script>
 	</head>
 	<body>
@@ -36,7 +36,7 @@
 			<div id="main">
 
 				<header class="major container 75%">
-					<h2>Trouvez une activité proche 
+					<h2>Trouvez une activité proche
 					<br />
 					de chez vous selon vos critères !
 					</h2>
@@ -51,12 +51,12 @@
 						<header>
 							<h3>Remplissez au moins un champ et lancez la recherche</h3>
 						</header>
-						<form>
+						<form id="formulaire" name"formulaire">
 							<div class="row">
 								<div class="12u">
 									<label for="commune">Commune</label>
 									<select name="commune" id="commune" />
-										<option value="">Non renseigné</option>
+										<option value="_">Non renseigné</option>
 									</select>
 								</div>
 							</div>
@@ -64,7 +64,7 @@
 								<div class="12u">
 									<label for="activite">Activité</label>
 									<select name="activite" id="activite" />
-										<option value="">Non renseigné</option>
+										<option value="_">Non renseigné</option>
 									</select>
 								</div>
 							</div>
@@ -80,15 +80,15 @@
 							<div class="row">
 								<div class="6u 12u(mobilep)">
 									<label>Salle spécialisée ?</label>
-					       			<input type="radio" name="spe" id="spe_nr" /> <label style="font-weight:normal;" for="spe_nr">Non renseigné</label>
-					       			<input type="radio" name="spe" id="spe_oui" /> <label style="font-weight:normal;" for="spe_oui">Oui</label>
-					       			<input type="radio" name="spe" id="spe_non" /> <label style="font-weight:normal;" for="spe_non">Non</label>
+					       			<input type="radio" name="spe1" id="spe_nr" /> <label style="font-weight:normal;" for="spe_nr">Non renseigné</label>
+					       			<input type="radio" name="spe2" id="spe_oui" /> <label style="font-weight:normal;" for="spe_oui">Oui</label>
+					       			<input type="radio" name="spe3" id="spe_non" /> <label style="font-weight:normal;" for="spe_non">Non</label>
 								</div>
 								<div class="6u 12u(mobilep)">
 									<label>Activité pratiquée ?</label>
-					       			<input type="radio" name="prat" id="prat_nr" /> <label style="font-weight:normal;" for="prat_nr">Non renseigné</label>
-					       			<input type="radio" name="prat" id="prat_oui" /> <label style="font-weight:normal;" for="prat_oui">Oui</label>
-					       			<input type="radio" name="prat" id="prat_non" /> <label style="font-weight:normal;" for="prat_non">Non</label>
+					       			<input type="radio" name="prat1" id="prat_nr" /> <label style="font-weight:normal;" for="prat_nr">Non renseigné</label>
+					       			<input type="radio" name="prat2" id="prat_oui" /> <label style="font-weight:normal;" for="prat_oui">Oui</label>
+					       			<input type="radio" name="prat3" id="prat_non" /> <label style="font-weight:normal;" for="prat_non">Non</label>
 								</div>
 							</div>
 
@@ -123,14 +123,14 @@
 					</div>
 
 					<section class="feature left">
-						<a href="http://localhost:8080/create/installations" id="create_installation" class="image icon fa-refresh"><img src="images/activites.jpg" alt="" /></a>
+						<a href="http://localhost:8080/create/activites" id="create_activitie" class="image icon fa-refresh"><img src="images/activites.jpg" alt="" /></a>
 						<div class="content">
 							<h3>Activités</h3>
 							<p>Essayez dans un premier temps de ne mettre à jour que cette table qui est la principale. Si vous ne trouvez toujours pas votre activité, vous pouvez tenter de mettre à jour les tables "Installations" et "Equipements" ci-dessous sur lesquelles la table principale repose.</p>
 						</div>
 					</section>
 					<section class="feature right">
-						<a href="http://localhost:8080/create/activites" id="create_activitie" class="image icon fa-refresh"><img src="images/installations.jpg" alt="" /></a>
+						<a href="http://localhost:8080/create/installations" id="create_installation" class="image icon fa-refresh"><img src="images/installations.jpg" alt="" /></a>
 						<div class="content">
 							<h3>Installations</h3>
 							<p>Mettez ici à jour la table "Installations".</p>

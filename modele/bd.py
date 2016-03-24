@@ -41,6 +41,8 @@ class BD:
 
     def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
         # select sur la base de données
+
+        #print("TEST2 : " + name_commune +", " + number_equipment +", " + activitie +", " + practice +", " + special)
         result = DAO.select_from_activites(name_commune, number_equipment, activitie, practice, special)
         # nom des colonnes de la tables
 
@@ -117,4 +119,4 @@ class BD:
 
 #BD.get_name_commune()
 
-print(BD.select_from_installations(213704))
+#print(BD.select_from_installations(213704))
