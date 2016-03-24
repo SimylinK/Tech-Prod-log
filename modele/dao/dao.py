@@ -109,6 +109,96 @@ class DAO:
         DAO.close()
         return result
 
+
+    def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
+        DAO.connect()
+
+        request = "SELECT * FROM activites where "
+
+        if name_commune != "" :
+            request += "nom_commune = '" + name_commune + "' AND "
+        if number_equipment != -1 :
+            request += "nb_equipements_identiques = " + str(number_equipment) + " AND "
+        if activitie != "" :
+            request += "activite_libelle = '" + activitie + "' AND "
+        if practice != -1 :
+            request += "activite_pratiquee = " +  str(practice) +" AND "
+        if special != -1 :
+            request += "dans_salle_spe = " + str(special) + " AND "
+
+        request = request[:-4] +";"
+
+        try :
+            DAO.cursor.execute(request)
+        except Error :
+            print("Execute error")
+            return
+
+        #num_fields = len(cursor.description)
+        field_names = [i[0] for i in DAO.cursor.description]
+
+        #print(field_names)
+
+        rows = DAO.cursor.fetchall()
+
+        result = [field_names]
+        result.append(rows)
+
+        DAO.close()
+        return result
+
+
+    def select_from_equipements(activity_code) :
+        DAO.connect()
+
+        request = "SELECT * FROM equipements where equipement_id = " + str(activity_code) + ";"
+
+        try :
+            DAO.cursor.execute(request)
+        except Error :
+            print("Execute error")
+            return
+
+        #num_fields = len(cursor.description)
+        field_names = [i[0] for i in DAO.cursor.description]
+
+        #print(field_names)
+
+        rows = DAO.cursor.fetchall()
+
+        result = [field_names]
+        result.append(rows)
+
+        DAO.close()
+        return result
+
+
+    def select_from_installations(instal_number) :
+        DAO.connect()
+
+        request = "SELECT * FROM installations where numero = " + str(instal_number) + ";"
+
+        try :
+            DAO.cursor.execute(request)
+        except Error :
+            print("Execute error")
+            return
+
+        #num_fields = len(cursor.description)
+        field_names = [i[0] for i in DAO.cursor.description]
+
+        #print(field_names)
+
+        rows = DAO.cursor.fetchall()
+
+        result = [field_names]
+        result.append(rows)
+
+        DAO.close()
+        return result
+
+
+
     def python_type_to_SQL(type) :
         if type is "int" :
             return "INTEGER DEFAULT NULL"
@@ -123,6 +213,30 @@ class DAO:
 
     def remove_dot_CSV (CSV_file_name) :
         return CSV_file_name[:-4]
+
+
+    def get_name_commune() :
+        DAO.connect()
+
+        request = "SELECT DISTINCT 	nom_commune FROM activites;"
+        try :
+            DAO.cursor.execute(request)
+        except Error :
+            print("Execute error")
+            return
+
+        #num_fields = len(cursor.description)
+        field_names = [i[0] for i in DAO.cursor.description]
+
+        #print(field_names)
+
+        rows = DAO.cursor.fetchall()
+
+        result = [field_names]
+        result.append(rows)
+
+        DAO.close()
+        return result
 
 
 ## Tests

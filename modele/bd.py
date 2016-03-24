@@ -38,7 +38,35 @@ class BD:
         # nom des colonnes de la tables
 
         return BD.get_JSON(result)
-    
+
+    def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
+        # select sur la base de données
+        result = DAO.select_from_activites(name_commune, number_equipment, activitie, practice, special)
+        # nom des colonnes de la tables
+
+        return BD.get_JSON(result)
+
+    def select_from_equipements(activity_code) :
+        # select sur la base de données
+        resultEqu = DAO.select_from_equipements(activity_code)
+        # nom des colonnes de la tables
+
+        return BD.get_JSON(resultEqu)
+
+
+    def select_from_installations(activity_code) :
+        # select sur la base de données
+        resultEqu = DAO.select_from_equipements(activity_code)
+        # nom des colonnes de la tables
+
+        tmp = str(resultEqu[1]).split(",")
+        instal_number = tmp[7]
+
+        resultIns = DAO.select_from_installations(instal_number)
+
+        return BD.get_JSON(resultIns)
+
+
     def get_JSON(result) :
         res = {}
 
@@ -58,7 +86,7 @@ class BD:
                     id5:row[4],
                     id6:row[5]}
             res[len(res)] = dict
-            
+
         return res
 
     def remove_dot_CSV (CSV_file_name) :
@@ -68,7 +96,25 @@ class BD:
         return type_object[file_name].list_attribute
 
 
+    def get_name_commune() :
+        result = DAO.get_name_commune()[1]
+        list = []
+
+        for name in result:
+            tmp = str(name)
+            tmp = tmp[2:-3]
+            list.append(tmp)
+
+        print(list)
+
+
 ## Tests
 
 
 #BD.create_tables()
+
+#print(BD.select_from_activites("", -1, "", -1, -1))
+
+#BD.get_name_commune()
+
+print(BD.select_from_installations(213704))
