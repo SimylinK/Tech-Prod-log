@@ -99,7 +99,7 @@ class BD:
 
 
     def get_name_commune() :
-        result = DAO.get_name_commune()[1]
+        """result = DAO.get_name_commune()[1]
         list = []
 
         for name in result:
@@ -107,7 +107,13 @@ class BD:
             tmp = tmp[2:-3]
             list.append(tmp)
 
-        print(list)
+        print(list)"""
+
+        result = DAO.get_name_commune()
+        # nom des colonnes de la tables
+
+        return BD.get_JSON(result)
+
 
 
 ## Tests

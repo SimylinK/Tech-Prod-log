@@ -109,23 +109,10 @@ $(function(){
     number_equipment = $("#nb_equipements").val();
     activitie = $("#activite").val();
 
-    alert($('input[name=spe2]:checked').val());
+    special = $("input[name=spe]:checked").val();
 
-    special = "_";
-    if($('input[name=spe2]:checked').val() == "on") {
-      special = "Oui";
-    } else if ($('input[name=spe3]:checked').val() == "on") {
-      special = "Non";
-    }
+    practice = $("input[name=pra]:checked").val();
 
-    practice = "_";
-    if($('input[name=prat2]:checked').val() == "on") {
-      practice = "Oui";
-    } else if ($('input[name=prat3]:checked').val() == "on") {
-      practice = "Non";
-    }
-    alert("practice : " +  practice);
-    alert("special : "  + special);
 
     $.ajax({
       // chargement du fichier externe
@@ -137,8 +124,6 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
-
-        alert(data);
 
         var result = [];
         var table = [];
