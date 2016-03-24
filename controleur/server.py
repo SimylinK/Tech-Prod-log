@@ -35,9 +35,11 @@ app = bottle.app()
 
 
 ###Remplir les champs du formulaire
-@app.route('/fill_form')
+@app.route('/fill_form', method=['OPTIONS', 'GET'])
 def fill() :
-    
+    response.headers['Content-type'] = 'application/json'
+    res = json.dumps(BD.get_name_commune())
+    return res
 
 
 
