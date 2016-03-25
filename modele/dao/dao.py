@@ -120,7 +120,7 @@ class DAO:
         tmp = int(number_equipment)
 
 
-        request = "SELECT * FROM activites where "
+        request = "SELECT activite_libelle, nom_commune, nb_equipements_identiques, dans_salle_spe, activite_pratiquee, activite_praticable FROM activites where "
 
         if name_commune is not "_" :
             request += "nom_commune = '" + name_commune + "' AND  "

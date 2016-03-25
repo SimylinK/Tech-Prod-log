@@ -88,8 +88,6 @@ class BD:
                     id5:row[4],
                     id6:row[5]}
             res[len(res)] = dict
-        
-        #print(res)
 
         return res
 
@@ -101,7 +99,27 @@ class BD:
 
 
     def get_name_commune() :
-        result = DAO.get_name_commune()[1]
+        # select sur la base de données
+        resultEqu = DAO.get_name_commune()
+        # nom des colonnes de la tables
+
+
+        res = {}
+        id1 = str(resultEqu[0][0]).replace("_", " ")
+
+        for row in resultEqu[1]:
+            dict = {id1:row[0]}
+            res[len(res)] = dict
+
+        return (res)
+
+
+
+
+
+
+
+        """result = DAO.get_name_commune()[1]
         list = []
 
         for name in result:
@@ -109,34 +127,37 @@ class BD:
             tmp = tmp[2:-3]
             list.append(tmp)
 
-        
+
 
         list = str(list)
         list = list[1:-1]
-        
-        
-        
+
+
+
         tmp = str(list).split(",")
 
         list = ""
-        
-        for com in tmp :
-            list += "{\"value\":"+com+"},"
-        
+
+
+        for index, com in enumerate(tmp):
+            list += str(index)+": {\'nom commune \':"+com+"},"
+
         list = list[:-1]
-        
-        
-        list = "{ \"commune\": [" + str(list) +"]}"
-        
+
+
+
+
+        list = "{" + str(list) +"}"
+
         list = list.replace(": \'", ": \"")
         list = list.replace(":\'", ": \"")
         list = list.replace("\'}", "\"}")
-        
-        list = list.replace("\'", "\\\"}")
-        
-        #print(list)
-        
-        return(list)
+
+        #list = list.replace("\'", "\\\"}")
+
+        print(list)
+
+        return(list)"""
 
         """return( DAO.get_name_commune())
         # nom des colonnes de la tables
