@@ -78,7 +78,7 @@ def request_table(name_commune, number_equipment, activitie, practice, special):
 @enable_cors
 def request_table(activity_code):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_from_equipements(number))
+    res = json.dumps(BD.select_from_equipements(activity_code))
     return res
 
 #Table Installation
@@ -86,7 +86,7 @@ def request_table(activity_code):
 @enable_cors
 def request_table(activity_code):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_from_installations(number))
+    res = json.dumps(BD.select_from_installations(activity_code))
     return res
 
 

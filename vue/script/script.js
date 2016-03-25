@@ -29,7 +29,7 @@ $(function(){
   min =0;
   max = 10;
 
-
+  /*
   //Remplir les champs du formulaire au lancement de la page
   $.ajax({
       // chargement du fichier externe
@@ -43,7 +43,8 @@ $(function(){
       success  : function(data) {
         alert("success");
       }
-  })
+  })*/
+
 
   //Affichage sur les tables
   function display_table(fichier) {
@@ -96,15 +97,23 @@ $(function(){
       }
     });
   }
-
-
   //affichage activités
   $("#button_display_activitie").on("click", function() {
-    select_table("activites");
+    display_table("activites");
+  });
+  //affichage installations
+  $("#button_display_installation").on("click", function() {
+    display_table("installations");
+  });
+  //affichage équipements
+  $("#button_display_equipment").on("click", function() {
+    display_table("equipements");
   });
 
-  function select_table(fichier) {
 
+
+  //requête sur activites
+  function select_activites() {
     name_commune = $("#commune").val();
     number_equipment = $("#nb_equipements").val();
     activitie = $("#activite").val();
@@ -149,7 +158,7 @@ $(function(){
 
         $.each(table, function(i) {
           if(i < max && i >= min){
-            html += "<tr>";
+            html += "<tr style=\"cursor:pointer;\" class=\"select_equipement\">";
             $.each(table[i], function(j) {
               html += "<td>"+table[i][j]+"</td>";
             });
@@ -157,18 +166,40 @@ $(function(){
           }
         });
 
-        $("#display_"+fichier).html(html);
+        $("#display_activites").html(html);
+
+        //requête activités
+        $(".select_equipement").on("click", function() {
+          alert("test");
+          activity_code = "69882";
+          select_equipement(activity_code);
+        });
       }
     });
   }
-
-
-  $("#button_display_installation").on("click", function() {
-    display_table("installations");
-  });
-  $("#button_display_equipment").on("click", function() {
-    display_table("equipements");
+  //requête activités
+  $("#button_select_activitie").on("click", function() {
+    select_activites();
   });
 
+
+  //requête sur equipements
+  function select_equipement(activity_code) {
+    $.ajax({
+      // chargement du fichier externe
+      url      : "http://localhost:8080/request/equipements/"+activity_code,
+      // Passage des données au fichier externe
+      cache    : false,
+      dataType : "json",
+      error    : function(request, error) { // Info Debuggage si erreur
+        alert("Erreur : responseText: "+request.responseText);
+      },
+      success  : function(data) {
+        alert("success");
+      }
+    });
+  }
+  /*le listener des éléments qui déclenchent la fonction select_equipement() 
+  sont plus haut à la fin de la fonction select_activites()*/
 
 });
