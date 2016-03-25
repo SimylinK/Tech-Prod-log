@@ -38,9 +38,11 @@ app = bottle.app()
 @app.route('/fill_form', method=['OPTIONS', 'GET'])
 def fill() :
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.get_name_commune())
+    res = BD.get_name_commune()
+    #res = json.dumps(BD.get_name_commune())
+    #print(res)
     return res
-
+    
 
 
 ##Importation des tables
@@ -67,6 +69,7 @@ def view_table(table_name):
 def request_table(name_commune, number_equipment, activitie, practice, special):
     response.headers['Content-type'] = 'application/json'
     res = json.dumps(BD.select_from_activites(name_commune, number_equipment, activitie, practice, special))
+    #print(res)
     return res
 
 

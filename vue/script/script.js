@@ -111,7 +111,7 @@ $(function(){
 
     special = $("input[name=spe]:checked").val();
 
-    practice = $("input[name=pra]:checked").val();
+    practice = $("input[name=prat]:checked").val();
 
 
     $.ajax({

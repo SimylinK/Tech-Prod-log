@@ -88,6 +88,8 @@ class BD:
                     id5:row[4],
                     id6:row[5]}
             res[len(res)] = dict
+        
+        #print(res)
 
         return res
 
@@ -132,7 +134,7 @@ class BD:
         
         list = list.replace("\'", "\\\"}")
         
-        print(list)
+        #print(list)
         
         return(list)
 
