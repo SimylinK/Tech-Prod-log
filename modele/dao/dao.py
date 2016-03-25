@@ -135,7 +135,7 @@ class DAO:
 
         request = request[:-6] +";"
 
-        print("\n\n\n\n\n\n" + request + "\n\n\n\n\n\n\n")
+        print("\n\n\n" + request + "\n\n\n")
 
         try :
             DAO.cursor.execute(request)
