@@ -113,12 +113,6 @@ class BD:
 
         return (res)
 
-
-
-
-
-
-
         """result = DAO.get_name_commune()[1]
         list = []
 
@@ -163,7 +157,21 @@ class BD:
         # nom des colonnes de la tables
 
         return BD.get_JSON(result)"""
+        
+        
+    def get_name_activity() :
+        # select sur la base de données
+        resultEqu = DAO.get_name_activity()
+        # nom des colonnes de la tables
 
+        res = {}
+        id1 = str(resultEqu[0][0]).replace("_", " ")
+
+        for row in resultEqu[1]:
+            dict = {id1:row[0]}
+            res[len(res)] = dict
+
+        return (res)
 
 
 ## Tests

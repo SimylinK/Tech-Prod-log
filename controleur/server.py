@@ -34,15 +34,25 @@ def enable_cors(fn):
 app = bottle.app()
 
 
-###Remplir les champs du formulaire
-@app.route('/fill_form', method=['OPTIONS', 'GET'])
-def fill() :
+##Remplir les champs du formulaire
+##champ commune
+@app.route('/fill_form/commune', method=['OPTIONS', 'GET'])
+@enable_cors
+def fill_com() :
     response.headers['Content-type'] = 'application/json'
     #res = BD.get_name_commune()
     res = json.dumps(BD.get_name_commune())
-    print(res)
+    #print(res)
     return res
-
+##champ activité
+@app.route('/fill_form/activity', method=['OPTIONS', 'GET'])
+@enable_cors
+def fill_act() :
+    response.headers['Content-type'] = 'application/json'
+    #res = BD.get_name_commune()
+    res = json.dumps(BD.get_name_activity())
+    #print(res)
+    return res
 
 
 ##Importation des tables

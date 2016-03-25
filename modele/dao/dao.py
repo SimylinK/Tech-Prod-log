@@ -247,5 +247,28 @@ class DAO:
         DAO.close()
         return result
 
+    
+    def get_name_activity() :
+        DAO.connect()
+
+        request = "SELECT DISTINCT 	activite_libelle FROM activites;"
+        try :
+            DAO.cursor.execute(request)
+        except Error :
+            print("Execute error")
+            return
+
+        #num_fields = len(cursor.description)
+        field_names = [i[0] for i in DAO.cursor.description]
+
+        #print(field_names)
+
+        rows = DAO.cursor.fetchall()
+
+        result = [field_names]
+        result.append(rows)
+
+        DAO.close()
+        return result
 
 ## Tests

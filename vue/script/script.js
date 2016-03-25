@@ -29,11 +29,12 @@ $(function(){
   min =0;
   max = 10;
 
-  /*
+  
   //Remplir les champs du formulaire au lancement de la page
+  //champ Commune
   $.ajax({
       // chargement du fichier externe
-      url      : "http://localhost:8080/fill_form",
+      url      : "http://localhost:8080/fill_form/commune",
       // Passage des données au fichier externe
       cache    : false,
       dataType : "json",
@@ -41,10 +42,51 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
-        alert("success");
-      }
-  })*/
+        var result = [];
+        var listeCom = [];
 
+        for(var i in data){
+          for(var j in data[i]){
+            result.push([data[i][j]]);
+          }
+          listeCom.push(result);
+          result = [];
+        }
+
+        $.each(listeCom, function(i) {
+          //console.log(listeCom[i][0]);
+          $('#commune').append('<option value="'+listeCom[i][0]+'">' + listeCom[i][0] + '</option>');
+        });
+      }
+  })
+  //champ Activite
+    $.ajax({
+      // chargement du fichier externe
+      url      : "http://localhost:8080/fill_form/activity",
+      // Passage des données au fichier externe
+      cache    : false,
+      dataType : "json",
+      error    : function(request, error) { // Info Debuggage si erreur
+        alert("Erreur : responseText: "+request.responseText);
+      },
+      success  : function(data) {
+        var result = [];
+        var listeAct = [];
+
+        for(var i in data){
+          for(var j in data[i]){
+            result.push([data[i][j]]);
+          }
+          listeAct.push(result);
+          result = [];
+        }
+
+        $.each(listeAct, function(i) {
+          //console.log(listeCom[i][0]);
+          $('#activite').append('<option value="'+listeAct[i][0]+'">' + listeAct[i][0] + '</option>');
+        });
+      }
+  })
 
   //Affichage sur les tables
   function display_table(fichier) {
@@ -156,7 +198,10 @@ $(function(){
 
         html+= "</tr></thead>"
 
+        var isEmpty = true;
+
         $.each(table, function(i) {
+          isEmpty = false;
           if(i < max && i >= min){
             html += "<tr style=\"cursor:pointer;\" class=\"select_equipement\">";
             $.each(table[i], function(j) {
@@ -165,6 +210,11 @@ $(function(){
             html += "</tr>";
           }
         });
+
+        if(isEmpty) {
+          alert("Aucun résultat pour cette recherche");
+        }
+
 
         $("#display_activites").html(html);
 
