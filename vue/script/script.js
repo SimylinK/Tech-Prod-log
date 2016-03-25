@@ -175,13 +175,15 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
-
+        //console.log(data);
         var result = [];
         var table = [];
         var html = "";
         var entete = [];
-        for (var i in data[0])
-        entete.push(i);
+        for (var i in data[0]) {
+          //console.log(i); 
+          entete.push(i);
+        }        
 
         for(var i in data){
           for(var j in data[i]){
@@ -195,7 +197,6 @@ $(function(){
         $.each(entete, function(i) {
           html += "<th>"+entete[i]+"</th>";
         });
-
         html+= "</tr></thead>"
 
         var isEmpty = true;
@@ -218,11 +219,17 @@ $(function(){
 
         $("#display_activites").html(html);
 
-        //requête activités
+          $("#test42").on("click", function() {
+            $('#display_activites').switchColumns( 0, 1 );
+          });
+   
+
+        //On place un listener sur chaque ligne du tableau 
+        //il faut le faire ici car la table est créée dans cette fonction et n'existe pas avant son appel
         $(".select_equipement").on("click", function() {
           alert("test");
-          activity_code = "69882";
-          select_equipement(activity_code);
+          activity_code = "69882"; 
+          select_equipement(activity_code); 
         });
       }
     });
@@ -231,6 +238,32 @@ $(function(){
   $("#button_select_activitie").on("click", function() {
     select_activites();
   });
+  //méthode, utilisée dans select_activites(), qui inverse deux colonnes d'une table html
+  $.fn.switchColumns = function ( col1, col2 ) {
+      var $this = this,
+          $tr = $this.find('tr');
+
+      $tr.each(function(i, ele){
+          var $ele = $(ele),
+              $td = $ele.find('td'),
+              $th = $ele.find('th'),
+              $tdt,
+              $tht;
+          
+          $tht = $th.eq( col1 ).clone();
+          $th.eq( col1 ).html( $th.eq( col2 ).html() );
+          $th.eq( col2 ).html( $tht.html() );
+
+          $tdt = $td.eq( col1 ).clone();
+          $td.eq( col1 ).html( $td.eq( col2 ).html() );
+          $td.eq( col2 ).html( $tdt.html() );
+      });
+  };
+  //pour l'utiliser :
+  //$('#table').switchColumns( 1, 2 );
+
+
+
 
 
   //requête sur equipements
@@ -253,3 +286,6 @@ $(function(){
   sont plus haut à la fin de la fonction select_activites()*/
 
 });
+
+
+

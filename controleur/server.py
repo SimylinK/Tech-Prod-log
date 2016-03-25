@@ -7,6 +7,7 @@ import bottle
 from bottle import route, run, template, static_file, post, get, response, redirect
 import json
 from bd import BD
+from collections import OrderedDict
 
 #DOC : http://bottlepy.org/docs/dev/index.html
 '''#Exemple de la doc
@@ -78,9 +79,8 @@ def view_table(table_name):
 @enable_cors
 def request_table(name_commune, number_equipment, activitie, practice, special):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_from_activites(name_commune, number_equipment, activitie, practice, special))
+    res = json.dumps(OrderedDict(BD.select_from_activites(name_commune, number_equipment, activitie, practice, special)))
     return res
-
 
 #Table Equipement
 @app.route('/request/equipements/<activity_code>', method=['OPTIONS', 'GET'])

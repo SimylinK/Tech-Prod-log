@@ -45,7 +45,8 @@ class BD:
         #print("TEST2 : " + name_commune +", " + number_equipment +", " + activitie +", " + practice +", " + special)
         result = DAO.select_from_activites(name_commune, number_equipment, activitie, practice, special)
         # nom des colonnes de la tables
-
+    
+        #print(BD.get_JSON(result))
         return BD.get_JSON(result)
 
     def select_from_equipements(activity_code) :
