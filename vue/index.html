@@ -8,20 +8,33 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
-
 		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css"/>
-	  <script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
-	  <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+	  	<script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+	  	<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
 
-  	<script src="script/script.js"></script>
+  		<script src="script/script.js"></script>
+  		<link rel="stylesheet" href="our-css/main.css" />
 
 		<script language=javascript>
       	//on récupère ici dans une variable l'url courante pour
       	//pouvoir revenir en arrière lors des imports de tables
         var url= document.URL;
-    </script>
+    	</script>
 	</head>
+
 	<body>
+
+		<img id="menu" src="images/menu.png"/>
+		<div id="div-menu">
+			<p id="close-menu">&#10005;</p> 
+			<ul>
+				<li><a href="#">Revenir en haut</a></li>
+				<li><a href="#main">Trouvez une activité !</a></li>
+				<li><a href="#maj">Mises à jour</a></li>
+				<li><a href="#infos">Informations</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</div>
 
 		<!-- Header -->
 			<div id="header">
@@ -121,7 +134,7 @@
 				</div>
 
 
-				<div class="box alt container">
+				<div id="maj" class="box alt container">
 
 					<div style="background-color : white;">
 					<h2>Vous ne trouvez pas une activité ?</h2>
@@ -306,7 +319,7 @@
 				</div>
 				-->
 
-				<footer class="major container 75%">
+				<footer id="infos" class="major container 75%">
 					<h3>D'où proviennent ces données ?</h3>
 					<p>Ce site repose sur la base de données du site officiel des Pays de La Loire. Cette base est ouverte publiquement et référence toutes les infrastructures de la région.</p>
 					<ul class="actions">
@@ -320,7 +333,7 @@
 			<div id="footer">
 				<div class="container 75%">
 
-					<header class="major last">
+					<header id="contact" class="major last">
 						<h2>Des questions, remarques, suggestions ?</h2>
 					</header>
 

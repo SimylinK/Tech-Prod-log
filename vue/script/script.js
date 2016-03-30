@@ -1,6 +1,36 @@
 $(function(){
+  
+  /*avec les propriétés css (pas d'animation)
+  $("#menu").on('click', function() {
+    $("#menu").css("visibility", "hidden");
+    $("#div-menu").css("visibility", "visible");
+    $("#menu").css("z-index", "1");
+    $("#div-menu").css("z-index", "2");
+  });
+  $("#close-menu").on('click', function() {
+    $("#div-menu").css("visibility", "hidden");
+    $("#menu").css("visibility", "visible");
+    $("#div-menu").css("z-index", "1");
+    $("#menu").css("z-index", "2");
+  });*/
 
+  $("#div-menu").hide();
 
+  $("#menu").on('click', function() {
+    $('#menu').hide('fast');
+    $("#div-menu").show("fast");
+    $("#menu").css("z-index", "1");
+    $("#div-menu").css("z-index", "2");
+  });
+
+  $("#close-menu").on('click', function() {
+    $("#div-menu").hide("fast");
+    $('#menu').show('fast');
+    $("#div-menu").css("z-index", "1");
+    $("#menu").css("z-index", "2");
+  });
+
+ 
   // Création de la base de donnée
   /*function create_table(fichier) {
     $.ajax({
