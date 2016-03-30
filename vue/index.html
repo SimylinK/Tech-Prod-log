@@ -9,16 +9,17 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
 
-		<script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
-        <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css"/>
+	  <script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+	  <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
 
-        <script src="script/script.js"></script>
+  	<script src="script/script.js"></script>
 
-        <script language=javascript>
-            //on récupère ici dans une variable l'url courante pour
-            //pouvoir revenir en arrière lors des imports de tables
-            var url= document.URL;
-        </script>
+		<script language=javascript>
+      	//on récupère ici dans une variable l'url courante pour
+      	//pouvoir revenir en arrière lors des imports de tables
+        var url= document.URL;
+    </script>
 	</head>
 	<body>
 
@@ -111,11 +112,9 @@
 								</div>
 							</div>
 						</form>
-
-
-<input id="test42" type="button" value="test" />
     					<table class="default" id="display_activites">
 						</table>
+						<div id="dialog" title="Informations supplémentaires"> </div>
 
 					</section>
 				</div>
@@ -363,11 +362,7 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+
 
 	</body>
 </html>

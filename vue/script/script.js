@@ -1,5 +1,6 @@
 $(function(){
 
+
   // Création de la base de donnée
   /*function create_table(fichier) {
     $.ajax({
@@ -15,7 +16,6 @@ $(function(){
       }
     });
   }
-
   $("#create_installation").on("click", function() {
     create_table("installations");
   });
@@ -29,7 +29,7 @@ $(function(){
   min =0;
   max = 10;
 
-  
+
   //Remplir les champs du formulaire au lancement de la page
   //champ Commune
   $.ajax({
@@ -164,7 +164,6 @@ $(function(){
 
     practice = $("input[name=prat]:checked").val();
 
-
     $.ajax({
       // chargement du fichier externe
       url      : "http://localhost:8080/request/activites/"+name_commune+"/"+number_equipment+"/"+activitie+"/"+practice+"/"+special,
@@ -181,23 +180,53 @@ $(function(){
         var html = "";
         var entete = [];
         for (var i in data[0]) {
-          //console.log(i); 
+          //console.log(i);
           entete.push(i);
-        }        
+        }
+
+
+        var order = [];
+        var index = 0;
+        $.each(entete, function(i) {
+          if (entete[i] == "activite libelle") {
+            order[0] = index;
+          }
+          if (entete[i] == "nom commune") {
+            order[1] = index;
+          }
+          if (entete[i] == "nb equipements identiques") {
+            order[2] = index;
+          }
+          if (entete[i] == "dans salle spe") {
+            order[3] = index;
+          }
+          if (entete[i] == "activite pratiquee") {
+            order[4] = index;
+          }
+          if (entete[i] == "activite praticable") {
+            order[5] = index;
+          }
+          index++;
+        });
+
+
+
+        html+= "<thead><tr>"
+        for(i = 0; i < 6; i++) {
+          html += "<th>"+entete[order[i]]+"</th>";
+        }
+        html+= "</tr></thead>"
+
 
         for(var i in data){
-          for(var j in data[i]){
-            result.push([data[i][j]]);
+          for(j = 0; j < 6; j++) {
+            result.push([data[i][entete[order[j]]]]);
           }
           table.push(result);
           result = [];
         }
 
-        html+= "<thead><tr>"
-        $.each(entete, function(i) {
-          html += "<th>"+entete[i]+"</th>";
-        });
-        html+= "</tr></thead>"
+
 
         var isEmpty = true;
 
@@ -219,17 +248,15 @@ $(function(){
 
         $("#display_activites").html(html);
 
-          $("#test42").on("click", function() {
-            $('#display_activites').switchColumns( 0, 1 );
-          });
-   
 
-        //On place un listener sur chaque ligne du tableau 
+        //On place un listener sur chaque ligne du tableau
         //il faut le faire ici car la table est créée dans cette fonction et n'existe pas avant son appel
-        $(".select_equipement").on("click", function() {
-          alert("test");
-          activity_code = "69882"; 
-          select_equipement(activity_code); 
+        $.each( $(".select_equipement"), function( i, val ) {
+          $(this).on("click", function() {
+            activity_code = data[0]["num fiche equipement"];
+            console.log(activity_code);
+            select_equipement(activity_code);
+          });
         });
       }
     });
@@ -238,36 +265,42 @@ $(function(){
   $("#button_select_activitie").on("click", function() {
     select_activites();
   });
-  //méthode, utilisée dans select_activites(), qui inverse deux colonnes d'une table html
-  $.fn.switchColumns = function ( col1, col2 ) {
-      var $this = this,
-          $tr = $this.find('tr');
 
-      $tr.each(function(i, ele){
-          var $ele = $(ele),
-              $td = $ele.find('td'),
-              $th = $ele.find('th'),
-              $tdt,
-              $tht;
-          
-          $tht = $th.eq( col1 ).clone();
-          $th.eq( col1 ).html( $th.eq( col2 ).html() );
-          $th.eq( col2 ).html( $tht.html() );
-
-          $tdt = $td.eq( col1 ).clone();
-          $td.eq( col1 ).html( $td.eq( col2 ).html() );
-          $td.eq( col2 ).html( $tdt.html() );
-      });
-  };
-  //pour l'utiliser :
-  //$('#table').switchColumns( 1, 2 );
-
-
-
+  $( "#dialog" ).dialog({
+    autoOpen: false,
+    resizable: false,
+        modal: true,
+        width:'auto',
+    //on utilise le code suivant pour fixer la fenêtre au centre de l'écran (avec toujours la possibilité de la déplacer)
+    open: function(event, ui) {
+      $(event.target).dialog('widget')
+          .css({ position: 'fixed' })
+          .position({ my: 'center', at: 'center', of: window });
+  }
+  });
 
 
   //requête sur equipements
   function select_equipement(activity_code) {
+
+    $("#dialog").html("");
+
+    $.ajax({
+      // chargement du fichier externe
+      url      : "http://localhost:8080/request/installations/"+activity_code,
+      // Passage des données au fichier externe
+      cache    : false,
+      dataType : "json",
+      error    : function(request, error) { // Info Debuggage si erreur
+        alert("Erreur : responseText: "+request.responseText);
+      },
+      success  : function(data) {
+        $("#dialog").append("<U>INSTALLATION :</U> <br/>");
+        $("#dialog").append("Commune : " + data["0"]["nom commune"] + "<br/>");
+        $("#dialog").append("Code postal : " + data["0"]["code postal"] + "<br/><br/>");
+      }
+    });
+
     $.ajax({
       // chargement du fichier externe
       url      : "http://localhost:8080/request/equipements/"+activity_code,
@@ -278,14 +311,15 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
-        alert("success");
+        $("#dialog").append("<U>EQUIPEMENT :</U> <br/>");
+        $("#dialog").append("Nom : " + data["0"]["eq nom"] + "<br/>");
+        $("#dialog").append("Type : " + data["0"]["equipement type lib"] + "<br/> <br/>");
       }
     });
+
+    $("#dialog").dialog( "open" );
   }
-  /*le listener des éléments qui déclenchent la fonction select_equipement() 
+  /*le listener des éléments qui déclenchent la fonction select_equipement()
   sont plus haut à la fin de la fonction select_activites()*/
 
 });
-
-
-
