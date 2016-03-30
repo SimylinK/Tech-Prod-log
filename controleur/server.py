@@ -77,6 +77,7 @@ def view_table(table_name):
 @app.route('/request/activites/<name_commune>/<number_equipment>/<activitie>/<practice>/<special>', method=['OPTIONS', 'GET'])
 @enable_cors
 def request_table(name_commune, number_equipment, activitie, practice, special):
+    activitie = activitie.replace(".", "/")
     response.headers['Content-type'] = 'application/json'
     res = json.dumps(BD.select_from_activites(name_commune, number_equipment, activitie, practice, special))
     return res

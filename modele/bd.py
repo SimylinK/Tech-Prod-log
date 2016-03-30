@@ -148,6 +148,7 @@ class BD:
         id1 = str(resultEqu[0][0]).replace("_", " ")
 
         for row in resultEqu[1]:
+            print(type({id1:row[0]}))
             dict = {id1:row[0]}
             res[len(res)] = dict
 

@@ -159,6 +159,7 @@ $(function(){
     name_commune = $("#commune").val();
     number_equipment = $("#nb_equipements").val();
     activitie = $("#activite").val();
+    activitie = activitie.replace("/", ".");
 
     special = $("input[name=spe]:checked").val();
 
@@ -174,6 +175,7 @@ $(function(){
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) {
+
         //console.log(data);
         var result = [];
         var table = [];
@@ -243,6 +245,9 @@ $(function(){
 
         if(isEmpty) {
           alert("Aucun résultat pour cette recherche");
+          html="";
+        } else {
+          init_button();
         }
 
 
@@ -319,7 +324,31 @@ $(function(){
 
     $("#dialog").dialog( "open" );
   }
-  /*le listener des éléments qui déclenchent la fonction select_equipement()
-  sont plus haut à la fin de la fonction select_activites()*/
+
+  var min = 0;
+  var max = 10;
+  $("#inc_act").css({"display":"none"});
+  $("#dec_act").css({"display":"none"});
+
+  function init_button() {
+   min = 0;
+   max = 10;
+   $('#dec_act').prop('disabled', true);
+   $('#inc_act').prop('disabled', false);
+   $("#inc_act").css({"display":"block"});
+   $("#dec_act").css({"display":"block"});
+ }
+ function incr() {
+   $('#dec_act').prop('disabled', false);
+   min += 100;
+   max += 100;
+ }
+ function decr() {
+   min -= 100;
+   max -= 100;
+   if(min == 0)
+   $('#dec_act').prop('disabled', true);
+   $('#inc_act').prop('disabled', false);
+ }
 
 });
