@@ -1,51 +1,51 @@
 import mysql.connector as sql #mysql.connector 1.1.6
 
-from lireCSV import CSV_read
-from lireCSV import get_list_attribute
-from lireCSV import type_object
+from CSVread import CSV_read
+from CSVread import get_list_attribute
+from CSVread import type_object
 from dao.dao import DAO
 
 from bean.activites import Activite
 from bean.installations import Installation
 from bean.equipements import Equipement
 
-class BD:
+class DB:
 
     #create all tables from CSV files
     def create_tables () :
         tables = ["installations.csv", "equipements.csv", "activites.csv"] #get CSV files
         for table in tables :
             list = CSV_read(table)
-            list_attribute = BD.get_list_attribute(table) #link with tables attributes lists
-            name = BD.remove_dot_CSV(table) #removing .csv
+            list_attribute = DB.get_list_attribute(table) #link with tables attributes lists
+            name = DB.remove_dot_CSV(table) #removing .csv
             DAO.create_table(name, list, list_attribute)
 
 
     #create a table from a CSV file
     def create_table (table) :
         list = CSV_read(table)
-        list_attribute = BD.get_list_attribute(table) #link with table attributes list
-        name = BD.remove_dot_CSV(table) #removing .csv
+        list_attribute = DB.get_list_attribute(table) #link with table attributes list
+        name = DB.remove_dot_CSV(table) #removing .csv
         DAO.create_table(name, list, list_attribute)
 
 
-    #select query on all table, depending on the table name 
+    #select query on all table, depending on the table name
     def select_all_table(db_table):
         result = DAO.select_all(db_table)
-        return BD.get_JSON(result)
+        return DB.get_JSON(result)
 
 
     #select query on the activites table
     def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
         result = DAO.select_from_activites(name_commune, number_equipment, activitie, practice, special)
-        return BD.get_JSON7(result)
+        return DB.get_JSON7(result)
 
 
     #select query on the equipements table
     def select_from_equipements(activity_code) :
         #get the equipment thanks to the activity_code given by activites table
         resultEqu = DAO.select_from_equipements(activity_code)
-        return BD.get_JSON(resultEqu)
+        return DB.get_JSON(resultEqu)
 
 
     #select query on the installations table
@@ -59,7 +59,7 @@ class BD:
         instal_number = str(instal_number)[:-2]
 
         resultIns = DAO.select_from_installations(instal_number)
-        return BD.get_JSON(resultIns)
+        return DB.get_JSON(resultIns)
 
 
     #return a string that can be used with json.dumps in order to create a good JSON file
@@ -86,7 +86,7 @@ class BD:
         return res
 
 
-    #same method but only used for select_from_activites that have 7 objects to display 
+    #same method but only used for select_from_activites that have 7 objects to display
     def get_JSON7(result) :
         res = {}
 
@@ -119,7 +119,7 @@ class BD:
     #getter of a list attributes table
     def get_list_attribute (file_name) :
         return type_object[file_name].list_attribute
-        
+
 
     #get list of all communes in db
     def get_name_commune() :
@@ -135,7 +135,7 @@ class BD:
             res[len(res)] = dict
 
         return (res)
-        
+
 
     #get list of all activites (activities) in db
     def get_name_activity() :

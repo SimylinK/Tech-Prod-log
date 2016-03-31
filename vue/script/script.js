@@ -1,6 +1,7 @@
 $(function(){
 
   //settings for the menu on the left
+
   $("#div-menu").hide();
 
   $("#menu").on('click', function() {
@@ -46,6 +47,7 @@ $(function(){
    $('#inc_act').prop('disabled', false);
  }
 
+//The listener for the buttons
  $("#inc_act").on("click", function() {
     incr("act");
     select_activites();
@@ -56,58 +58,68 @@ $(function(){
   });
 
 
-  //Fill the form fields at launch of the page
-  //Commune field
+
+  //Fill the form fields at the launch of the page from te dataBase
+  //for the names of the communes
   $.ajax({
-      //loading python server
+      // url for server.py
       url      : "http://localhost:8080/fill_form/commune",
-      //sending datas
+      // We get the names of the communes in json
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { //get error response if there's a problem
+      error    : function(request, error) { // alert for the error
+
         alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) { //get server response 
         var result = [];
-        var listeCom = [];
+        var arrayCom = [];
 
+        //We append all the commune names in the array arrayCom
         for(var i in data){
           for(var j in data[i]){
             result.push([data[i][j]]);
           }
-          listeCom.push(result);
+          arrayCom.push(result);
           result = [];
         }
 
-        $.each(listeCom, function(i) {
-          $('#commune').append('<option value="'+listeCom[i][0]+'">' + listeCom[i][0] + '</option>');
+
+
+        //We had each name in the <select> of the form
+        $.each(arrayCom, function(i) {
+          $('#commune').append('<option value="'+arrayCom[i][0]+'">' + arrayCom[i][0] + '</option>');
         });
       }
   })
-  //Activite field
+  //for the names of the activities
     $.ajax({
-      //loading python server
+      // url for server.py
       url      : "http://localhost:8080/fill_form/activity",
-      //sending datas 
+      // We get the names of the activities in json
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { 
-        alert("Erreur : responseText: "+request.responseText); //get error response if there's a problem
+      error    : function(request, error) { // alert for the error
+        alert("Erreur : responseText: "+request.responseText);
       },
       success  : function(data) { //get server response
         var result = [];
-        var listeAct = [];
+        var arrayAct = [];
 
+        //We append all the commune names in the array arrayCom
         for(var i in data){
           for(var j in data[i]){
             result.push([data[i][j]]);
           }
-          listeAct.push(result);
+          arrayAct.push(result);
           result = [];
         }
 
-        $.each(listeAct, function(i) {
-          $('#activite').append('<option value="'+listeAct[i][0]+'">' + listeAct[i][0] + '</option>');
+
+        //We had each name in the <select> of the form
+        $.each(arrayAct, function(i) {
+          $('#activite').append('<option value="'+arrayAct[i][0]+'">' + arrayAct[i][0] + '</option>');
+
         });
       }
   })
@@ -137,30 +149,33 @@ $(function(){
         var result = [];
         var table = [];
         var html = "";
-        var entete = [];
+        var header = [];
         for (var i in data[0]) {
-          entete.push(i);
+
+          //console.log(i);
+          header.push(i);
+
         }
 
         var order = [];
         var index = 0;
-        $.each(entete, function(i) {
-          if (entete[i] == "activite libelle") {
+        $.each(header, function(i) {
+          if (header[i] == "activite libelle") {
             order[0] = index;
           }
-          if (entete[i] == "nom commune") {
+          if (header[i] == "nom commune") {
             order[1] = index;
           }
-          if (entete[i] == "nb equipements identiques") {
+          if (header[i] == "nb equipements identiques") {
             order[2] = index;
           }
-          if (entete[i] == "dans salle spe") {
+          if (header[i] == "dans salle spe") {
             order[3] = index;
           }
-          if (entete[i] == "activite pratiquee") {
+          if (header[i] == "activite pratiquee") {
             order[4] = index;
           }
-          if (entete[i] == "activite praticable") {
+          if (header[i] == "activite praticable") {
             order[5] = index;
           }
           index++;
@@ -169,13 +184,13 @@ $(function(){
 
         html+= "<thead><tr>"
         for(i = 0; i < 6; i++) {
-          html += "<th>"+entete[order[i]]+"</th>";
+          html += "<th>"+header[order[i]]+"</th>";
         }
         html+= "</tr></thead>"
 
         for(var i in data){
           for(j = 0; j < 6; j++) {
-            result.push([data[i][entete[order[j]]]]);
+            result.push([data[i][header[order[j]]]]);
           }
           table.push(result);
           result = [];
