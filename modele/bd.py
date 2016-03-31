@@ -52,9 +52,11 @@ class BD:
     def select_from_installations(activity_code) :
         #get equipement table
         resultEqu = DAO.select_from_equipements(activity_code)
+
         #get instal_number (num_install in db) from equipement table to get the installation
-        tmp = str(resultEqu[1]).split(",") 
-        instal_number = tmp[7]
+        tmp = str(resultEqu[1]).split(",")
+        instal_number = tmp[5]
+        instal_number = str(instal_number)[:-2]
 
         resultIns = DAO.select_from_installations(instal_number)
         return BD.get_JSON(resultIns)
@@ -145,7 +147,6 @@ class BD:
 
         #fill the list with db datas
         for row in resultEqu[1]:
-            print(type({id1:row[0]}))
             dict = {id1:row[0]}
             res[len(res)] = dict
 
