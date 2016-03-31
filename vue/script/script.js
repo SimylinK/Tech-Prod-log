@@ -1,6 +1,6 @@
 $(function(){
 
-  //setting for the menu on the left
+  //settings for the menu on the left
   $("#div-menu").hide();
 
   $("#menu").on('click', function() {
@@ -21,7 +21,7 @@ $(function(){
   //We display 6 elements
   var min = 0;
   var max = 6;
-  //When no result, buttons are hidden
+  //When there is no result, buttons are hidden
   $("#inc_act").css({"display":"none"});
   $("#dec_act").css({"display":"none"});
 
@@ -56,18 +56,18 @@ $(function(){
   });
 
 
-  //Fill the form fields at the launch of the page
-  //champ Commune
+  //Fill the form fields at launch of the page
+  //Commune field
   $.ajax({
-      // chargement du fichier externe
+      //loading python server
       url      : "http://localhost:8080/fill_form/commune",
-      // Passage des données au fichier externe
+      //sending datas
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { // Info Debuggage si erreur
+      error    : function(request, error) { //get error response if there's a problem
         alert("Erreur : responseText: "+request.responseText);
       },
-      success  : function(data) {
+      success  : function(data) { //get server response 
         var result = [];
         var listeCom = [];
 
@@ -80,22 +80,21 @@ $(function(){
         }
 
         $.each(listeCom, function(i) {
-          //console.log(listeCom[i][0]);
           $('#commune').append('<option value="'+listeCom[i][0]+'">' + listeCom[i][0] + '</option>');
         });
       }
   })
-  //champ Activite
+  //Activite field
     $.ajax({
-      // chargement du fichier externe
+      //loading python server
       url      : "http://localhost:8080/fill_form/activity",
-      // Passage des données au fichier externe
+      //sending datas 
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { // Info Debuggage si erreur
-        alert("Erreur : responseText: "+request.responseText);
+      error    : function(request, error) { 
+        alert("Erreur : responseText: "+request.responseText); //get error response if there's a problem
       },
-      success  : function(data) {
+      success  : function(data) { //get server response
         var result = [];
         var listeAct = [];
 
@@ -108,14 +107,12 @@ $(function(){
         }
 
         $.each(listeAct, function(i) {
-          //console.log(listeCom[i][0]);
           $('#activite').append('<option value="'+listeAct[i][0]+'">' + listeAct[i][0] + '</option>');
         });
       }
   })
 
-
-  //requête sur activites
+  //Activite request
   function select_activites() {
     name_commune = $("#commune").val();
     number_equipment = $("#nb_equipements").val();
@@ -127,26 +124,23 @@ $(function(){
     practice = $("input[name=prat]:checked").val();
 
     $.ajax({
-      // chargement du fichier externe
+      //loading python server
       url      : "http://localhost:8080/request/activites/"+name_commune+"/"+number_equipment+"/"+activitie+"/"+practice+"/"+special,
-      // Passage des données au fichier externe
+      //sending datas 
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { // Info Debuggage si erreur
+      error    : function(request, error) { //get error response if there's a problem
         alert("Erreur : responseText: "+request.responseText);
       },
-      success  : function(data) {
+      success  : function(data) { //get server response
 
-        //console.log(data);
         var result = [];
         var table = [];
         var html = "";
         var entete = [];
         for (var i in data[0]) {
-          //console.log(i);
           entete.push(i);
         }
-
 
         var order = [];
         var index = 0;
@@ -173,13 +167,11 @@ $(function(){
         });
 
 
-
         html+= "<thead><tr>"
         for(i = 0; i < 6; i++) {
           html += "<th>"+entete[order[i]]+"</th>";
         }
         html+= "</tr></thead>"
-
 
         for(var i in data){
           for(j = 0; j < 6; j++) {
@@ -188,8 +180,6 @@ $(function(){
           table.push(result);
           result = [];
         }
-
-
 
         var isEmpty = true;
 
@@ -216,12 +206,9 @@ $(function(){
           }
         }
 
-
         $("#display_activites").html(html);
 
-
-        //On place un listener sur chaque ligne du tableau
-        //il faut le faire ici car la table est créée dans cette fonction et n'existe pas avant son appel
+        //we put a listener on each table line
         $.each( $(".select_equipement"), function( i, val ) {
           $(this).on("click", function() {
             activity_code = data[0]["num fiche equipement"];
@@ -232,17 +219,18 @@ $(function(){
       }
     });
   }
-  //requête activités
+  //button for launch activites request
   $("#button_select_activitie").on("click", function() {
     select_activites();
   });
 
+  //UI dialog 
   $( "#dialog" ).dialog({
     autoOpen: false,
     resizable: false,
         modal: true,
         width:'auto',
-    //on utilise le code suivant pour fixer la fenêtre au centre de l'écran (avec toujours la possibilité de la déplacer)
+    //the following code permit to fix the UI dialog at screen center
     open: function(event, ui) {
       $(event.target).dialog('widget')
           .css({ position: 'fixed' })
@@ -250,22 +238,21 @@ $(function(){
   }
   });
 
-
-  //requête sur equipements
+  //Equipement request
   function select_equipement(activity_code) {
 
     $("#dialog").html("");
 
     $.ajax({
-      // chargement du fichier externe
+      //loading python server
       url      : "http://localhost:8080/request/installations/"+activity_code,
-      // Passage des données au fichier externe
+      //sending datas
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { // Info Debuggage si erreur
+      error    : function(request, error) { //get error response if there's a problem
         alert("Erreur : responseText: "+request.responseText);
       },
-      success  : function(data) {
+      success  : function(data) { //get server response
         $("#dialog").append("<U>INSTALLATION :</U> <br/>");
         $("#dialog").append("Commune : " + data["0"]["nom commune"] + "<br/>");
         $("#dialog").append("Code postal : " + data["0"]["code postal"] + "<br/><br/>");
@@ -273,15 +260,15 @@ $(function(){
     });
 
     $.ajax({
-      // chargement du fichier externe
+      //loading python server
       url      : "http://localhost:8080/request/equipements/"+activity_code,
-      // Passage des données au fichier externe
+      //sending datas
       cache    : false,
       dataType : "json",
-      error    : function(request, error) { // Info Debuggage si erreur
+      error    : function(request, error) { //get error response if there's a problem
         alert("Erreur : responseText: "+request.responseText);
       },
-      success  : function(data) {
+      success  : function(data) { //get server response
         $("#dialog").append("<U>EQUIPEMENT :</U> <br/>");
         $("#dialog").append("Nom : " + data["0"]["eq nom"] + "<br/>");
         $("#dialog").append("Type : " + data["0"]["equipement type lib"] + "<br/> <br/>");
@@ -290,7 +277,5 @@ $(function(){
 
     $("#dialog").dialog( "open" );
   }
-
-
 
 });
