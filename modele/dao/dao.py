@@ -1,10 +1,10 @@
 import mysql.connector as sql #mysql.connector 1.1.6
 
 class DAO:
-    cursor = None # variable de classe
-    conn = None # car cursor repose sur conn
+    cursor = None #class attribute
+    conn = None #cursor is supported by conn
 
-    #Ouvre la connexion
+    #Open db connexion
     def connect () :
         try :
             DAO.conn = sql.connect(host="infoweb",user="E145910Y",password="E145910Y", database="E145910Y", port=3306)
@@ -12,18 +12,18 @@ class DAO:
         except ValueError :
             print("Connect error")
 
-    #Fermr la connexion
+    #Close db connexion
     def close () :
         try :
             DAO.cursor.close();
         except ValueError:
             print("Close error")
 
-    #Permet de créer une table et de la remplir de données à partir d'un CSV
+    #create a table and fill it from a CSV file
     def create_table (table_name, list, list_attribute) :
         DAO.connect()
 
-        #On réinitialise la base de donnée
+        #reinit the db
         request = "DROP TABLE IF EXISTS "+table_name+";"
         try :
             DAO.cursor.execute(request)
@@ -31,16 +31,15 @@ class DAO:
             print("Execute error")
             return
 
-        #On créé la table
+        #create the table
         request = "CREATE TABLE "+table_name+" ("
 
+        #create a request with attributes and their types
         for key, value in list_attribute.items() :
             request = request + (key + " " +  DAO.python_type_to_SQL(value) + ",")
 
         request = request[:-1]
         request = request + ");"
-
-        print(request)
 
         try :
             DAO.cursor.execute(request)
@@ -52,7 +51,7 @@ class DAO:
         for key in list_attribute.keys() :
             list_keys.append(key)
 
-        #On remplit la table à partir du fichier csv
+        #fill the table
         pre_request  = "INSERT INTO " +  table_name + " ("
 
         for key in list_keys :
@@ -68,26 +67,25 @@ class DAO:
                     tmp_string = tmp_string.replace('"', '""')
                     request = request + "\"" + tmp_string + "\"" + ","
                 else :
-                    #Je crois qu'on ne rentre pas ici mais c'est pas grave
                     request = request + str(getattr(object, key)) + ","
             request = request[:-1] + ");"
-
 
             try :
                 DAO.cursor.execute(request)
             except Error :
                 print("Execute error")
                 return
-            #print(request)
 
         DAO.conn.commit()
         DAO.close()
 
+    #method to define a primary key in db table
     def define_PK (table_name, constraint_name, PK) :
         DAO.connect()
         DAO.cursor.execute("ALTER TABLE "+table_name+" ADD CONSTRAINT "+constraint_name+" PRIMARY KEY("+PK+");")
         DAO.close()
 
+    #select query on all the table
     def select_all(table_name) :
         DAO.connect()
 
@@ -98,10 +96,7 @@ class DAO:
             print("Execute error")
             return
 
-        #num_fields = len(cursor.description)
         field_names = [i[0] for i in DAO.cursor.description]
-
-        #print(field_names)
 
         rows = DAO.cursor.fetchall()
 
@@ -111,14 +106,11 @@ class DAO:
         DAO.close()
         return result
 
-
+    #select query on activites (activities) table
     def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
         DAO.connect()
 
-        print(type(number_equipment))
-
         tmp = int(number_equipment)
-
 
         request = "SELECT activite_libelle, nom_commune, nb_equipements_identiques, dans_salle_spe, activite_pratiquee, activite_praticable, num_fiche_equipement FROM activites where "
 
@@ -135,18 +127,13 @@ class DAO:
 
         request = request[:-6] +";"
 
-        print("\n\n\n" + request + "\n\n\n")
-
         try :
             DAO.cursor.execute(request)
         except Error :
             print("Execute error")
             return
 
-        #num_fields = len(cursor.description)
         field_names = [i[0] for i in DAO.cursor.description]
-
-        #print(field_names)
 
         rows = DAO.cursor.fetchall()
 
@@ -156,7 +143,7 @@ class DAO:
         DAO.close()
         return result
 
-
+    #select query on equipements (equipment) table
     def select_from_equipements(activity_code) :
         DAO.connect()
 
@@ -168,10 +155,7 @@ class DAO:
             print("Execute error")
             return
 
-        #num_fields = len(cursor.description)
         field_names = [i[0] for i in DAO.cursor.description]
-
-        #print(field_names)
 
         rows = DAO.cursor.fetchall()
 
@@ -181,7 +165,7 @@ class DAO:
         DAO.close()
         return result
 
-
+    #select query on installations table
     def select_from_installations(instal_number) :
         DAO.connect()
 
@@ -193,10 +177,7 @@ class DAO:
             print("Execute error")
             return
 
-        #num_fields = len(cursor.description)
         field_names = [i[0] for i in DAO.cursor.description]
-
-        #print(field_names)
 
         rows = DAO.cursor.fetchall()
 
@@ -206,8 +187,7 @@ class DAO:
         DAO.close()
         return result
 
-
-
+    #do the link between python types and SQL types
     def python_type_to_SQL(type) :
         if type is "int" :
             return "INTEGER DEFAULT NULL"
@@ -220,10 +200,11 @@ class DAO:
         else :
             print ("Problème de type")
 
+    #remove file format from a CSV name (so remove the .csv)
     def remove_dot_CSV (CSV_file_name) :
         return CSV_file_name[:-4]
 
-
+    #get list of all communes in db
     def get_name_commune() :
         DAO.connect()
 
@@ -234,10 +215,7 @@ class DAO:
             print("Execute error")
             return
 
-        #num_fields = len(cursor.description)
         field_names = [i[0] for i in DAO.cursor.description]
-
-        #print(field_names)
 
         rows = DAO.cursor.fetchall()
 
@@ -247,7 +225,7 @@ class DAO:
         DAO.close()
         return result
 
-
+    #get list of all activites (activities) in db
     def get_name_activity() :
         DAO.connect()
 
@@ -258,10 +236,7 @@ class DAO:
             print("Execute error")
             return
 
-        #num_fields = len(cursor.description)
         field_names = [i[0] for i in DAO.cursor.description]
-
-        #print(field_names)
 
         rows = DAO.cursor.fetchall()
 
@@ -270,5 +245,3 @@ class DAO:
 
         DAO.close()
         return result
-
-## Tests

@@ -9,67 +9,58 @@ from bean.activites import Activite
 from bean.installations import Installation
 from bean.equipements import Equipement
 
-
-
 class BD:
 
+    #create all tables from CSV files
     def create_tables () :
-
-        tables = ["installations.csv", "equipements.csv", "activites.csv"]
-
+        tables = ["installations.csv", "equipements.csv", "activites.csv"] #get CSV files
         for table in tables :
             list = CSV_read(table)
-            list_attribute = BD.get_list_attribute(table)
-            name = BD.remove_dot_CSV(table)
+            list_attribute = BD.get_list_attribute(table) #link with tables attributes lists
+            name = BD.remove_dot_CSV(table) #removing .csv
             DAO.create_table(name, list, list_attribute)
 
-    def create_table (table) :
 
+    #create a table from a CSV file
+    def create_table (table) :
         list = CSV_read(table)
-        list_attribute = BD.get_list_attribute(table)
-        name = BD.remove_dot_CSV(table)
+        list_attribute = BD.get_list_attribute(table) #link with table attributes list
+        name = BD.remove_dot_CSV(table) #removing .csv
         DAO.create_table(name, list, list_attribute)
 
+
+    #select query on all table, depending on the table name 
     def select_all_table(db_table):
-        #tname = type_objet[db_table];
-
-        # select sur la base de données
         result = DAO.select_all(db_table)
-        # nom des colonnes de la tables
-
         return BD.get_JSON(result)
 
+
+    #select query on the activites table
     def select_from_activites(name_commune, number_equipment, activitie, practice, special) :
-        # select sur la base de données
-
-        #print("TEST2 : " + name_commune +", " + number_equipment +", " + activitie +", " + practice +", " + special)
         result = DAO.select_from_activites(name_commune, number_equipment, activitie, practice, special)
-        # nom des colonnes de la tables
-
-        #print(BD.get_JSON(result))
         return BD.get_JSON7(result)
 
-    def select_from_equipements(activity_code) :
-        # select sur la base de données
-        resultEqu = DAO.select_from_equipements(activity_code)
-        # nom des colonnes de la tables
 
+    #select query on the equipements table
+    def select_from_equipements(activity_code) :
+        #get the equipment thanks to the activity_code given by activites table
+        resultEqu = DAO.select_from_equipements(activity_code)
         return BD.get_JSON(resultEqu)
 
 
+    #select query on the installations table
     def select_from_installations(activity_code) :
-        # select sur la base de données
+        #get equipement table
         resultEqu = DAO.select_from_equipements(activity_code)
-        # nom des colonnes de la tables
-
-        tmp = str(resultEqu[1]).split(",")
+        #get instal_number (num_install in db) from equipement table to get the installation
+        tmp = str(resultEqu[1]).split(",") 
         instal_number = tmp[7]
 
         resultIns = DAO.select_from_installations(instal_number)
-
         return BD.get_JSON(resultIns)
 
 
+    #return a string that can be used with json.dumps in order to create a good JSON file
     def get_JSON(result) :
         res = {}
 
@@ -80,7 +71,7 @@ class BD:
         id5 = str(result[0][4]).replace("_", " ")
         id6 = str(result[0][5]).replace("_", " ")
 
-        # données de la table
+        #get tables data
         for row in result[1]:
             dict = {id1:row[0],
                     id2:row[1],
@@ -92,6 +83,8 @@ class BD:
 
         return res
 
+
+    #same method but only used for select_from_activites that have 7 objects to display 
     def get_JSON7(result) :
         res = {}
 
@@ -103,7 +96,7 @@ class BD:
         id6 = str(result[0][5]).replace("_", " ")
         id7 = str(result[0][6]).replace("_", " ")
 
-        # données de la table
+        #get tables data
         for row in result[1]:
             dict = {id1:row[0],
                     id2:row[1],
@@ -116,52 +109,44 @@ class BD:
 
         return res
 
+    #remove file format from a CSV name (so remove the .csv)
     def remove_dot_CSV (CSV_file_name) :
         return CSV_file_name[:-4]
 
+
+    #getter of a list attributes table
     def get_list_attribute (file_name) :
         return type_object[file_name].list_attribute
+        
 
-
+    #get list of all communes in db
     def get_name_commune() :
-        # select sur la base de données
         resultEqu = DAO.get_name_commune()
-        # nom des colonnes de la tables
-
 
         res = {}
+        #replacing underscores by space for a better displaying
         id1 = str(resultEqu[0][0]).replace("_", " ")
 
+        #fill the list with db datas
         for row in resultEqu[1]:
             dict = {id1:row[0]}
             res[len(res)] = dict
 
         return (res)
+        
 
-
+    #get list of all activites (activities) in db
     def get_name_activity() :
-        # select sur la base de données
         resultEqu = DAO.get_name_activity()
-        # nom des colonnes de la tables
 
         res = {}
+        #replacing underscores by space for a better displaying
         id1 = str(resultEqu[0][0]).replace("_", " ")
 
+        #fill the list with db datas
         for row in resultEqu[1]:
             print(type({id1:row[0]}))
             dict = {id1:row[0]}
             res[len(res)] = dict
 
         return (res)
-
-
-## Tests
-
-
-#BD.create_tables()
-
-#print(BD.select_from_activites("", -1, "", -1, -1))
-
-#BD.get_name_commune()
-
-#print(BD.select_from_installations(213704))

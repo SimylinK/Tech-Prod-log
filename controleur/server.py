@@ -1,21 +1,13 @@
 import os
 import os.path
 import sys
-#pour revenir à un niveau au-dessus dans le path (on fait un chemin absolu de celui où on est et on revient en plus un cran en arrière puis dans modele avec ../modele)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../modele")))
 import bottle
 from bottle import route, run, template, static_file, post, get, response, redirect
 import json
 from bd import BD
 
-#DOC : http://bottlepy.org/docs/dev/index.html
-'''#Exemple de la doc
-@route('/hello/<name>')
-def index(name):
-    return template('<b>Hello {{name}}</b>!', name=name)
-'''
-
-#on doit utiliser les CORS pour éviter une erreur de Cross-Origin Request
+#we need to use CORS to avoid Cross-Origin Request error
 # the decorator
 def enable_cors(fn):
     def _enable_cors(*args, **kwargs):
@@ -34,35 +26,31 @@ def enable_cors(fn):
 app = bottle.app()
 
 
-##Remplir les champs du formulaire
-##champ commune
-@app.route('/fill_form/commune', method=['OPTIONS', 'GET'])
-@enable_cors
+##Fill form fields
+    ##commune field 
+@app.route('/fill_form/commune', method=['OPTIONS', 'GET']) 
+@enable_cors #don't forget to avoid CORS error
 def fill_com() :
-    response.headers['Content-type'] = 'application/json'
-    #res = BD.get_name_commune()
+    response.headers['Content-type'] = 'application/json' #JSON expected
     res = json.dumps(BD.get_name_commune())
-    #print(res)
     return res
-##champ activité
+    ##activité (activity) field
 @app.route('/fill_form/activity', method=['OPTIONS', 'GET'])
 @enable_cors
 def fill_act() :
     response.headers['Content-type'] = 'application/json'
-    #res = BD.get_name_commune()
     res = json.dumps(BD.get_name_activity())
-    #print(res)
     return res
 
 
-##Importation des tables
+##Tables import
 @app.route('/create/<table_name>')
 def import_table(table_name) :
-    BD.create_table(table_name+".csv")
-    return "<script>alert('Import terminé !'); history.go(-1);</script>" #on affiche un message de succès puis on retourne à la page d'accueil
+    BD.create_table(table_name+".csv") #append CSV file format at the end
+    return "<script>alert('Import terminé !'); history.go(-1);</script>" #print success message, then return on first page
 
 
-##Affichage des tables
+##Tables display
 @app.route('/display/<table_name>', method=['OPTIONS', 'GET'])
 @enable_cors
 def view_table(table_name):
@@ -71,18 +59,18 @@ def view_table(table_name):
     return res
 
 
-##Requêtes sur les tables
+##Requests on tables
 
-#Table activites
+#Activites (activity) tables
 @app.route('/request/activites/<name_commune>/<number_equipment>/<activitie>/<practice>/<special>', method=['OPTIONS', 'GET'])
 @enable_cors
 def request_table(name_commune, number_equipment, activitie, practice, special):
-    activitie = activitie.replace(".", "/")
+    activitie = activitie.replace(".", "/") #we replaced slashes before because they were interpreted in URL (bottle route)
     response.headers['Content-type'] = 'application/json'
     res = json.dumps(BD.select_from_activites(name_commune, number_equipment, activitie, practice, special))
     return res
 
-#Table Equipement
+#Equipement (equipment) table
 @app.route('/request/equipements/<activity_code>', method=['OPTIONS', 'GET'])
 @enable_cors
 def request_table(activity_code):
@@ -90,7 +78,7 @@ def request_table(activity_code):
     res = json.dumps(BD.select_from_equipements(activity_code))
     return res
 
-#Table Installation
+#Installation table
 @app.route('/request/installations/<activity_code>', method=['OPTIONS', 'GET'])
 @enable_cors
 def request_table(activity_code):
@@ -99,18 +87,9 @@ def request_table(activity_code):
     return res
 
 
-
-'''
-#pour atteindre le fichier index.html dans le dossier vue. D'après nos tests, il faut toujours mettre cette route en dernier dans le code
-@route('/<filepath:path>')
-def index(filepath):
-    return static_file(filepath,root="../vue")
-'''
-
-
-##Récupération de l'IP
-f = os.popen('ifconfig eth0 | grep "inet\ addr" | cut -d: -f2 | cut -d" " -f1')
+##Get IP adress
+f = os.popen('ifconfig eth0 | grep "inet\ addr" | cut -d: -f2 | cut -d" " -f1') #return device IP
 ip=f.read()
 
-##Lancement du serveur
-app.run(host=ip, port=8080, debug=True) # après avoir lancé le script, aller à l'adresse http://localhost:8080/index.html
+##Server laucnhing
+app.run(host=ip, port=8080, debug=True)
