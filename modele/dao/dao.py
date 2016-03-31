@@ -160,7 +160,7 @@ class DAO:
     def select_from_equipements(activity_code) :
         DAO.connect()
 
-        request = "SELECT * FROM equipements where equipement_id = " + str(activity_code) + ";"
+        request = "SELECT com_insee, com_lib, equipement_fiche, equipement_type_lib, eq_nom, ins_numero_install FROM equipements where equipement_id = " + str(activity_code) + ";"
 
         try :
             DAO.cursor.execute(request)
@@ -185,7 +185,7 @@ class DAO:
     def select_from_installations(instal_number) :
         DAO.connect()
 
-        request = "SELECT * FROM installations where numero = " + str(instal_number) + ";"
+        request = "SELECT nom_commune, code_postal, nom_voie, numero_voie, longitude, latitude FROM installations where numero = " + str(instal_number) + ";"
 
         try :
             DAO.cursor.execute(request)

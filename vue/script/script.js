@@ -1,19 +1,6 @@
 $(function(){
-  
-  /*avec les propriétés css (pas d'animation)
-  $("#menu").on('click', function() {
-    $("#menu").css("visibility", "hidden");
-    $("#div-menu").css("visibility", "visible");
-    $("#menu").css("z-index", "1");
-    $("#div-menu").css("z-index", "2");
-  });
-  $("#close-menu").on('click', function() {
-    $("#div-menu").css("visibility", "hidden");
-    $("#menu").css("visibility", "visible");
-    $("#div-menu").css("z-index", "1");
-    $("#menu").css("z-index", "2");
-  });*/
 
+  //setting for the menu on the left
   $("#div-menu").hide();
 
   $("#menu").on('click', function() {
@@ -30,37 +17,46 @@ $(function(){
     $("#menu").css("z-index", "2");
   });
 
- 
-  // Création de la base de donnée
-  /*function create_table(fichier) {
-    $.ajax({
-      // chargement du fichier externe
-      url      : "http://localhost:8080/create/"+fichier,
-      // Passage des données au fichier externe
-      type : 'GET',
-      error    : function(request, error) { // Info Debuggage si erreur
-        alert("Erreur " + fichier + ": responseText: "+request.responseText);
-      },
-      success  : function(data) {
-        alert("La base de donnée de " + fichier + " est à jour");
-      }
-    });
-  }
-  $("#create_installation").on("click", function() {
-    create_table("installations");
+  //The increment and decrement buttons for the navigation in the table
+  //We display 6 elements
+  var min = 0;
+  var max = 6;
+  //When no result, buttons are hidden
+  $("#inc_act").css({"display":"none"});
+  $("#dec_act").css({"display":"none"});
+
+  function init_button() {
+   min = 0;
+   max = 6;
+   $('#dec_act').prop('disabled', true);
+   $('#inc_act').prop('disabled', false);
+   $("#inc_act").css({"display":"block"});
+   $("#dec_act").css({"display":"block"});
+ }
+ function incr() {
+   $('#dec_act').prop('disabled', false);
+   min += 6;
+   max += 6;
+ }
+ function decr() {
+   min -= 6;
+   max -= 6;
+   if(min == 0)
+   $('#dec_act').prop('disabled', true);
+   $('#inc_act').prop('disabled', false);
+ }
+
+ $("#inc_act").on("click", function() {
+    incr("act");
+    select_activites();
   });
-  $("#create_activitie").on("click", function() {
-    create_table("activites");
+  $("#dec_act").on("click", function() {
+    decr("act");
+    select_activites();
   });
-  $("#create_equipment").on("click", function() {
-    create_table("equipements");
-  });*/
-
-  min =0;
-  max = 10;
 
 
-  //Remplir les champs du formulaire au lancement de la page
+  //Fill the form fields at the launch of the page
   //champ Commune
   $.ajax({
       // chargement du fichier externe
@@ -117,71 +113,6 @@ $(function(){
         });
       }
   })
-
-  //Affichage sur les tables
-  function display_table(fichier) {
-    $.ajax({
-      // chargement du fichier externe
-      url      : "http://localhost:8080/display/"+fichier,
-      // Passage des données au fichier externe
-      cache    : false,
-      dataType : "json",
-      error    : function(request, error) { // Info Debuggage si erreur
-        alert("Erreur : responseText: "+request.responseText);
-      },
-      success  : function(data) {
-
-        var result = [];
-        var table = [];
-        var html = "";
-        var entete = [];
-        for (var i in data[0])
-        entete.push(i);
-
-        for(var i in data){
-          for(var j in data[i]){
-            result.push([data[i][j]]);
-          }
-          table.push(result);
-          result = [];
-        }
-
-        html+= "<thead><tr>"
-        html += "<th>indice</th>";
-        $.each(entete, function(i) {
-          html += "<th>"+entete[i]+"</th>";
-        });
-
-        html+= "</tr></thead>"
-
-        $.each(table, function(i) {
-          if(i < max && i >= min){
-            html += "<tr>";
-            html += "<td>"+(i+1)+"</td>";
-            $.each(table[i], function(j) {
-              html += "<td>"+table[i][j]+"</td>";
-            });
-            html += "</tr>";
-          }
-        });
-
-        $("#display_"+fichier).html(html);
-      }
-    });
-  }
-  //affichage activités
-  $("#button_display_activitie").on("click", function() {
-    display_table("activites");
-  });
-  //affichage installations
-  $("#button_display_installation").on("click", function() {
-    display_table("installations");
-  });
-  //affichage équipements
-  $("#button_display_equipment").on("click", function() {
-    display_table("equipements");
-  });
-
 
 
   //requête sur activites
@@ -276,8 +207,13 @@ $(function(){
         if(isEmpty) {
           alert("Aucun résultat pour cette recherche");
           html="";
+          $("#inc_act").css({"display":"none"});
+          $("#dec_act").css({"display":"none"});
+
         } else {
-          init_button();
+          if(min == 0) {
+            init_button();
+          }
         }
 
 
@@ -355,30 +291,6 @@ $(function(){
     $("#dialog").dialog( "open" );
   }
 
-  var min = 0;
-  var max = 10;
-  $("#inc_act").css({"display":"none"});
-  $("#dec_act").css({"display":"none"});
 
-  function init_button() {
-   min = 0;
-   max = 10;
-   $('#dec_act').prop('disabled', true);
-   $('#inc_act').prop('disabled', false);
-   $("#inc_act").css({"display":"block"});
-   $("#dec_act").css({"display":"block"});
- }
- function incr() {
-   $('#dec_act').prop('disabled', false);
-   min += 100;
-   max += 100;
- }
- function decr() {
-   min -= 100;
-   max -= 100;
-   if(min == 0)
-   $('#dec_act').prop('disabled', true);
-   $('#inc_act').prop('disabled', false);
- }
 
 });

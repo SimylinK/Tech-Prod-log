@@ -63,7 +63,8 @@ class BD:
         # nom des colonnes de la tables
 
         tmp = str(resultEqu[1]).split(",")
-        instal_number = tmp[7]
+        instal_number = tmp[5]
+        instal_number = str(instal_number)[:-2]
 
         resultIns = DAO.select_from_installations(instal_number)
 
@@ -148,7 +149,6 @@ class BD:
         id1 = str(resultEqu[0][0]).replace("_", " ")
 
         for row in resultEqu[1]:
-            print(type({id1:row[0]}))
             dict = {id1:row[0]}
             res[len(res)] = dict
 
