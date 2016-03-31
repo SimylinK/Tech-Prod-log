@@ -114,6 +114,7 @@ class DAO:
 
         request = "SELECT activite_libelle, nom_commune, nb_equipements_identiques, dans_salle_spe, activite_pratiquee, activite_praticable, num_fiche_equipement FROM activites where "
 
+        #all the constraint from the user
         if name_commune is not "_" :
             request += "nom_commune = '" + name_commune + "' AND  "
         if tmp != -1 :
@@ -127,6 +128,7 @@ class DAO:
 
         request = request[:-6] +";"
 
+        #Execution of the request
         try :
             DAO.cursor.execute(request)
         except Error :

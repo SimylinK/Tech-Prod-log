@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../mode
 import bottle
 from bottle import route, run, template, static_file, post, get, response, redirect
 import json
-from bd import BD
+from db import DB
 
 #we need to use CORS to avoid Cross-Origin Request error
 # the decorator
@@ -27,26 +27,26 @@ app = bottle.app()
 
 
 ##Fill form fields
-    ##commune field 
-@app.route('/fill_form/commune', method=['OPTIONS', 'GET']) 
+    ##commune field
+@app.route('/fill_form/commune', method=['OPTIONS', 'GET'])
 @enable_cors #don't forget to avoid CORS error
 def fill_com() :
     response.headers['Content-type'] = 'application/json' #JSON expected
-    res = json.dumps(BD.get_name_commune())
+    res = json.dumps(DB.get_name_commune())
     return res
     ##activité (activity) field
 @app.route('/fill_form/activity', method=['OPTIONS', 'GET'])
 @enable_cors
 def fill_act() :
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.get_name_activity())
+    res = json.dumps(DB.get_name_activity())
     return res
 
 
 ##Tables import
 @app.route('/create/<table_name>')
 def import_table(table_name) :
-    BD.create_table(table_name+".csv") #append CSV file format at the end
+    DB.create_table(table_name+".csv") #append CSV file format at the end
     return "<script>alert('Import terminé !'); history.go(-1);</script>" #print success message, then return on first page
 
 
@@ -55,7 +55,7 @@ def import_table(table_name) :
 @enable_cors
 def view_table(table_name):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_all_table(table_name))
+    res = json.dumps(DB.select_all_table(table_name))
     return res
 
 
@@ -67,7 +67,7 @@ def view_table(table_name):
 def request_table(name_commune, number_equipment, activitie, practice, special):
     activitie = activitie.replace(".", "/") #we replaced slashes before because they were interpreted in URL (bottle route)
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_from_activites(name_commune, number_equipment, activitie, practice, special))
+    res = json.dumps(DB.select_from_activites(name_commune, number_equipment, activitie, practice, special))
     return res
 
 #Equipement (equipment) table
@@ -75,7 +75,7 @@ def request_table(name_commune, number_equipment, activitie, practice, special):
 @enable_cors
 def request_table(activity_code):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_from_equipements(activity_code))
+    res = json.dumps(DB.select_from_equipements(activity_code))
     return res
 
 #Installation table
@@ -83,7 +83,7 @@ def request_table(activity_code):
 @enable_cors
 def request_table(activity_code):
     response.headers['Content-type'] = 'application/json'
-    res = json.dumps(BD.select_from_installations(activity_code))
+    res = json.dumps(DB.select_from_installations(activity_code))
     return res
 
 
